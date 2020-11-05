@@ -145,6 +145,8 @@ public void retrieveBalance (View v)  {
         if (provider.getClass().equals(BouncyCastleProvider.class)) {
             return;
         }
+        //There is a possibility  the bouncy castle registered by android may not have all ciphers 
+     //so we  substitute with the one bundled in the app.
         Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME);
         Security.insertProviderAt(new BouncyCastleProvider(), 1);
     }
