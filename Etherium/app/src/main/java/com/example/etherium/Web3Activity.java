@@ -40,7 +40,7 @@ public class Web3Activity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
        StrictMode.setThreadPolicy(policy);
 //enter your own infura api key below
-        web3 = Web3j.build(new HttpService("https://rinkeby.infura.io/v3/7bbbffb034be4967be9168b928f2e872"));
+        web3 = Web3j.build(new HttpService("https://rinkeby.infura.io/v3xxxxxxxxxxxx872"));
 
         setupBouncyCastle();
 
@@ -82,7 +82,7 @@ public void retrieveBalance (View v)  {
     //get wallet's balance
 
     try {
-            EthGetBalance balanceWei = web3.ethGetBalance("0xe3f540731e27e2bb175580fb4f83e3d85d279703", DefaultBlockParameterName.LATEST).sendAsync()
+            EthGetBalance balanceWei = web3.ethGetBalance("0xe3f540731e27e2bb175580fbxxxxxxxx", DefaultBlockParameterName.LATEST).sendAsync()
                     .get();
         TextView txtbalance=findViewById(R.id.text_balance);
             txtbalance.setText(getString(R.string.your_balance) + balanceWei.getBalance());
@@ -118,7 +118,7 @@ public void retrieveBalance (View v)  {
         int value  = Integer.parseInt(Edtvalue.getText().toString());
         try{
 
-           TransactionReceipt receipt = Transfer.sendFunds(web3, credentials,"0x2a21e3d18120f221efbc7e155458b5e8af2fba85",BigDecimal.valueOf(value), Convert.Unit.ETHER).send();
+           TransactionReceipt receipt = Transfer.sendFunds(web3, credentials,"0x2a2 please enter yours b5e8af2fba85",BigDecimal.valueOf(value), Convert.Unit.ETHER).send();
            Toast.makeText(this, "Transaction successful: " +receipt.getTransactionHash(), Toast.LENGTH_LONG).show();
     }
     catch(Exception e){
