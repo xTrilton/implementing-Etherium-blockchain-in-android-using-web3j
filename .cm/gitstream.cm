@@ -1,4 +1,5 @@
 # -*- mode: yaml -*-
+
 manifest:
   version: 1.0
 automations:
@@ -9,9 +10,8 @@ automations:
     run:
       - action: add-label@v1
         args:
-          label: "⚠️ Missing Changelog"
+          label: "Missing Changelog"
           color:'fbca04'
-  # Post a comment that requests changes.
       - action: add-comment@v1
          args: 
           comment: |
