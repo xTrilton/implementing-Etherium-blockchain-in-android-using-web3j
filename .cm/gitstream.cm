@@ -14,6 +14,5 @@ automations:
           color:'fbca04'
       - action: add-comment@v1
          args: 
-          comment: |
-            All new features require an update to the changelog. Please modify your PR to include any relevant changelog updates
+          comment: | All new features require an update to the changelog. Please modify your PR to include any relevant changelog updates
 
