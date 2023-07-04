@@ -2,17 +2,16 @@
 manifest:
   version: 1.0
 automations:
-  # Add a label that indicates how many minutes it will take to review the PR.
+  # Request changes for new features that lack changelog updates.
   review_changelog: 
     if:
      - {{ branch.name | includes(term="feature") }}
     run:
       - action: add-label@v1
-      # etr is defined in the last section of this example
         args:
           label: "⚠️ Missing Changelog"
           color:'fbca04'
-  # Post a comment that lists the best experts for the files that were modified.
+  # Post a comment that requests changes.
       - action: add-comment@v1
          args: 
           comment: |
