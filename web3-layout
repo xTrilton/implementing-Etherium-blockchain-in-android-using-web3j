@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/text_headline"
+        android:text="@string/create_etherium_wallet"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/walletpath"
+            android:hint="@string/enter_wallet_name" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/password"
+            android:hint="@string/please_enter_password" />
+
+
+    <Button
+        android:id="@+id/buttonview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="createWallet"
+        android:text="@string/create_wallet" />
+    <TextView
+        android:id="@+id/text_address"
+        android:text="@string/your_address_will_be_shown_here"
+        android:textSize="15sp"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/colorPrimaryDark"/>
+        <TextView
+            android:id="@+id/text_node"
+            android:text="@string/connect_to_etherium_network"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/buttonsconnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:onClick="connectToEthNetwork"
+                android:text="@string/connect" />
+
+
+            <Button
+                android:id="@+id/buttonbalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="retrieveBalance"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="@string/balance" />
+
+
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/text_balance"
+            android:text="@string/please_check_your_balance"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark" />
+        <TextView
+            android:id="@+id/text_etherium"
+            android:text="@string/send_etherium"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ethvalue"
+            android:hint="@string/enter_eth_value_to_send" />
+    <Button
+        android:id="@+id/buttonmake"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="makeTransaction"
+        android:layout_marginTop="20dp"
+        android:text="@string/send" />
+
+</LinearLayout>
+</ScrollView>
