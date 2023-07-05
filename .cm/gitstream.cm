@@ -9,7 +9,7 @@ automations:
     run:
       - action: add-label@v1
         args:
-          label: "Missing Changelog"
+          label: "⚠️ Missing Changelog"
           color: 'fbca04'
       - action: add-comment@v1
         args: 
