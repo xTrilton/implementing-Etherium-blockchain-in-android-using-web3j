@@ -5,8 +5,7 @@ cfa49a6 Update gitstream.cm
 313985a Update gitstream.cm
 89ce00f Update gitstream.cm
 e8cc738 Update gitstream.cm
-89bc07d Create gitstream.yml
-01fd140 Create gitstream.cm
+
 b2e2790 Delete gitstream.cm
 fb3e563 Delete gitstream.yml
 27aba27 Merge pull request #3 from xTrilton/workflows
