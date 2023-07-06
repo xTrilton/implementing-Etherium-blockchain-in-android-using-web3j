@@ -1,0 +1,3 @@
+The branch name contains the phrase feature
+{{ branch.name | includes(term="feature") }}
+The PR lacks changes to the docs/changelog.md file
