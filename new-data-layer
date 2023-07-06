@@ -1,0 +1,21 @@
+type mutation {
+  postCreate(
+    input: {
+      title: "Next.js"
+      url: "https://nextjs.org"
+      comments: [{ create: { message: "Next.js is awesome!" } }]
+    }
+  ) {
+    post {
+      id
+      title
+      comments(first: 1) {
+        edges {
+          node {
+            message
+          }
+        }
+      }
+    }
+  }
+}
