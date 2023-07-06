@@ -11,9 +11,11 @@ automations:
       - action: add-label@v1
         args:
           label: "⚠️ Missing Changelog"
-          color: 'fbca04'
+          color: {{ colors.yellow }}
       - action: add-comment@v1
         args: 
           comment: | 
             All new features require an update to the changelog. Please modify your PR to include any relevant changelog updates.
 
+colors:
+  yellow: 'fbca04'
