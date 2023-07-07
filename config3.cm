@@ -1,0 +1,13 @@
+# -*- mode: yaml -*-
+manifest:
+  version: 1.0
+automations:
+  # Request changes for new featuresbhjbghgh that lack changelog updates. 9088y8g76fg7tyd
+review_javadoc_input_parameters:
+  if:
+
+  run:
+      - action: add-comment@v1
+        args: 
+          comment: | 
+            This PR modifies method input parameters, but is missing Javadoc changes. Please check to ensure no Javadoc changes are necessary.
