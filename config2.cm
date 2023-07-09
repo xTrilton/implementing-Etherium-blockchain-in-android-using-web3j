@@ -6,7 +6,8 @@ automations:
 
 review_javadoc:
   if:
-
+    - {{ is.java | every }}
+     - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | every }}
   run:
       - action: add-label@v1
         args:
@@ -17,6 +18,8 @@ review_javadoc:
           reviewers: [my-organization/tech-writers]
     - action: approve@v1
       
+is:
+    java: {{ files | extensions | match(term='java') }}
 
 colors:
   green: '0e8a16'
