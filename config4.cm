@@ -6,6 +6,9 @@ automations:
 review_javadoc_large:
   if:
     - {{ is.java | every }}
+    - {{ is.size | every }}
+    #The statement below is connected to config2
+    - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | nope }}
 
 run:
   - action: add-label@v1
