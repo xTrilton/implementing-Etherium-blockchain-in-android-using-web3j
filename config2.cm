@@ -7,7 +7,7 @@ automations:
 review_javadoc:
   if:
     - {{ is.java | every }}
-     - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | every }}
+    - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | every }}
   run:
       - action: add-label@v1
         args:
