@@ -8,7 +8,7 @@ automations:
     if:
       - {{ is.java | every }}
       - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | every }}
-     run:
+    run:
        - action: add-label@v1
            args:
              label: "📓Javadoc Only"
