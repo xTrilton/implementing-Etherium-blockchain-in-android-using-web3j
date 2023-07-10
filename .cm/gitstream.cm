@@ -2,11 +2,8 @@
 manifest:
   version: 1.0
 automations:
-  # Request changes for new featuresbhjbghgh that lack changelog updates. 9088y8g76fg7tyd
-
-review_new_class_javadoc:
-
-  if:
+  review_new_class_javadoc:
+    if:
      - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\/) | some }}
 run:
       - action: add-label@v1
@@ -17,7 +14,6 @@ run:
         args: 
           comment: | 
             Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
-
 
 colors:
   yellow: 'fbca04'
