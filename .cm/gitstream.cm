@@ -7,8 +7,8 @@ automations:
    review_new_class_javadoc:
 
      if:
-      - {{ is.java and is.new | some }}
-      - {{ source.diff.files | includes(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\//) | some }}
+       - {{ is.java and is.new | some }}
+       - {{ source.diff.files | match(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\//) | some }}
 run:
       - action: add-label@v1
         args:
