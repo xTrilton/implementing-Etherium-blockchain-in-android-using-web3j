@@ -2,24 +2,19 @@
 manifest:
   version: 1.0
 automations:
-  # https://docs.gitstream.cm/automations/review-sensitive-files/
-
-review_javadoc:
-  if:
-    - {{ is.java | every }}
-    - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | every }}
-  run:
-      - action: add-label@v1
-        args:
-          label: "📓Javadoc Only"
-          color: {{ colors.green }}
-      - action: add-reviewers@v1
-        args:
-          reviewers: [my-organization/tech-writers]
-    - action: approve@v1
+  #https://docs.gitstream.cm/automations/review-sensitive-files/
+  review_javadoc:
+    if:
+      - {{ source.diff.files | matchDiffLines(regex=r/^\/\*\*[\s\S]*?\*\/) | every }}
+    run:
+       - action: add-label@v1
+         args:
+            label: "📓Javadoc Only"
+            color: {{ colors.green }}
+       - action: add-reviewers@v1
+         args:
+           reviewers: [my-organization/tech-writers]
+       - action: approve@v1
       
-is:
-    java: {{ files | extensions | match(term='java') }}
-
 colors:
   green: '0e8a16'
