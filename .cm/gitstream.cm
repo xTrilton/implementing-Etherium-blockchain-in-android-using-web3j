@@ -10,12 +10,12 @@ automations:
       - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | every }}
     run:
        - action: add-label@v1
-           args:
-             label: "📓Javadoc Only"
-             color: {{ colors.green }}
+         args:
+            label: "📓Javadoc Only"
+            color: {{ colors.green }}
        - action: add-reviewers@v1
-           args:
-             reviewers: [my-organization/tech-writers]
+         args:
+           reviewers: [my-organization/tech-writers]
        - action: approve@v1
       
 is:
