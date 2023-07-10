@@ -7,7 +7,6 @@ automations:
 review_new_class_javadoc:
 
   if:
-     - {{ is.java and is.new | some }}
      - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\/) | some }}
 run:
       - action: add-label@v1
@@ -19,9 +18,6 @@ run:
           comment: | 
             Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
 
-is:
-    java: {{ files | extensions | match(term='java') }}
-    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
 
 colors:
   yellow: 'fbca04'
