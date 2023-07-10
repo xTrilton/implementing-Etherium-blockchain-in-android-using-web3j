@@ -2,19 +2,26 @@
 manifest:
   version: 1.0
 automations:
-  #https://docs.gitstream.cm/automations/review-sensitive-files/
-  review_javadoc:
-    if:
-      - {{ source.diff.files | matchDiffLines(regex=r/^\/\*\*[\s\S]*?\*\/) | every }}
-    run:
-       - action: add-label@v1
-         args:
-            label: "📓Javadoc Only"
-            color: {{ colors.green }}
-       - action: add-reviewers@v1
-         args:
-           reviewers: [my-organization/tech-writers]
-       - action: approve@v1
-      
+  # Request changes for new featuresbhjbghgh that lack changelog updates. 9088y8g76fg7tyd
+
+review_new_class_javadoc:
+
+  if:
+     - {{ is.java and is.new | some }}
+     - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\/) | some }}
+run:
+      - action: add-label@v1
+        args:
+          label: "⚠️ Missing Javadoc"
+          color: {{ colors.yellow }}
+      - action: add-comment@v1
+        args: 
+          comment: | 
+            Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
+
+is:
+    java: {{ files | extensions | match(term='java') }}
+    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
+
 colors:
-  green: '0e8a16'
+  yellow: 'fbca04'
