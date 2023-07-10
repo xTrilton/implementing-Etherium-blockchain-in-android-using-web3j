@@ -6,7 +6,6 @@ automations:
   review_javadoc:
     if:
       - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\*\//) | every }};
-) | every }}
     run:
        - action: add-label@v1
          args:
