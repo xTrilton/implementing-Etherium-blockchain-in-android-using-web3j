@@ -1,5 +1,5 @@
 /**
-* Returns an Image object that can then be painted on the screen. 
+* Returns an object that can then be painted on the screen. 
 * The url argument must specify an absolute <a href="#{@link}">{@link URL}</a>. The name
 * argument is a specifier that is relative to the url argument. 
 * <p>
