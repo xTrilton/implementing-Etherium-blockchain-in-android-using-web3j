@@ -2,26 +2,14 @@
 manifest:
   version: 1.0
 automations:
-  # Request changes for new features
+  # Request changes for new featuresb
+ review_javadoc_input_parameters:
+  if:
+     - {{ source.diff.files | match(regex=r/\* @param) | nope }}
+     - {{ source.diff.files | matchDiffLines(regex=r/(public|protected|private|static|final|synchronized)?\s+(static|final|synchronized)?\s+(\w+<.*\>|\w+\[\]|\w+|\void)\s+\w+\s*\(([^)]*)\)\s*\{/| some }}
 
-   review_new_class_javadoc:
-
-     if:
-       - {{ is.java and is.new | some }}
-       - {{ source.diff.files | match(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\//) | nope }}
 run:
-      - action: add-label@v1
-        args:
-          label: "⚠️ Missing Javadoc"
-          color: {{ colors.yellow }}
-      - action: add-comment@v1
-        args: 
-          comment: | 
-            Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
-
-is:
-    java: {{ files | extensions | match(term='java') }}
-    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
-
-colors:
-  yellow: 'fbca04'
+  - action: add-comment@v1
+    args: 
+      comment: | 
+            This PR modifies method input parameters, but is missing Javadoc changes. Please check to ensure no Javadoc changes are necessary.
