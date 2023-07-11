@@ -16,3 +16,7 @@ return getImage(new URL(url, name));
 return null;
 }
 }
+} catch (MalformedURLException e) {
+return null;
+}
+}
