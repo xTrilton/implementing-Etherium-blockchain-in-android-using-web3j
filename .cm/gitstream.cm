@@ -4,20 +4,20 @@ manifest:
 automations:
    review_new_class_javadoc:
      if:
-      - {{ is.java and is.new | some }}
+       - {{ is.java and is.new | some }}
 run:
-      - action: add-label@v1
-        args:
-          label: "⚠️ Missing Javadoc"
-          color: {{ colors.yellow }}
-      - action: add-comment@v1
-        args: 
-          comment: | 
-            Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
+  - action: add-label@v1
+    args:
+        label: "⚠️ Missing Javadoc"
+        color: {{ colors.yellow }}
+  - action: add-comment@v1
+    args: 
+      comment: | 
+          Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
 
 is:
-    java: {{ files | extensions | match(term='java') }}
-    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
+ java: {{ files | extensions | match(term='java') }}
+ new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
 
 colors:
   yellow: 'fbca04'
