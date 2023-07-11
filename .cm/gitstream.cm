@@ -5,8 +5,11 @@ automations:
   # Request changes for new features that lack changelog updates.
   review_changelog: 
     if: 
-      - {{ branch.name | includes(term="feature") }}
-      - {{ files | match(regex=r/^docs\/changelog\.md$/) | nope }}
+       - {{ source.diff.files | match(regex=r/\*@param/) | nope }}
+       - {{ source.diff.files | includes(regex=r/(public|protected|private|static|final|synchronized)?\s+(static|final|synchronized)?\s+(\w+<.*\>|\w+\[\]|\w+|\void)\s+\w+\s*\(([^)]*)\)\s*\{/) | some }}
+
+      #- {{ branch.name | includes(term="feature") }}
+      #- {{ files | match(regex=r/^docs\/changelog\.md$/) | nope }}
     run:
       - action: add-label@v1
         args:
