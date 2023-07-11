@@ -2,6 +2,7 @@
 14c72ef Update gitstream.cm
 cfa49a6 Update gitstream.cm
 1e04baf Update gitstream.cm
+nivr view
 313985a Update gitstream.cm
 89ce00f Update gitstream.cm
 e8cc738 Update gitstream.cm
