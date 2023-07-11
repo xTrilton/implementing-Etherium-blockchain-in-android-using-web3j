@@ -2,20 +2,19 @@
 manifest:
   version: 1.0
 automations:
-  # Request changes for new features that lack changelog updates.
-  review_changelog: 
-    if: 
-       - {{ source.diff.files | matchDiffLines(regex=r/\*@param/) | nope }}
-       - {{ source.diff.files | matchDiffLines(regex=r/(public|protected|private|static|final|synchronized)\s+(static|final|synchronized)?(([^)]*))/) | some }}
+  #https://docs.gitstream.cm/automations/review-sensitive-files/
+  review_javadoc:
+    if:
+      - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\*\//) | every }}
     run:
       - action: add-label@v1
         args:
-          label: "⚠️ Missing Changelog"
-          color: {{ colors.yellow }}
-      - action: add-comment@v1
-        args: 
-          comment: | 
-            All new features require an update to the changelog. Please modify your PR to include any relevant changelog updates.
-
+            label: "📓Javadoc Only"
+            color: {{ colors.green }}
+      #- action: add-reviewers@v1
+        #args:
+           #reviewers: [my-organization/tech-writers]
+      - action: approve@v1
+      
 colors:
-  yellow: 'fbca04'
+  green: '0e8a16'
