@@ -16,3 +16,7 @@ return getImage(new URL(url, name));
 return null;
 }
 }
+
+public static void main(String[] args) {
+    myStaticMethod(); // Call the static method
+    // myPublicMethod(); This would compile an error
