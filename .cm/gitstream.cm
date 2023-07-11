@@ -4,11 +4,11 @@ manifest:
 automations:
   # Request changes for new featuresb
  review_javadoc_input_parameters:
-  if:
+   if:
      - {{ source.diff.files | match(regex=r/\* @param/) | nope }}
      - {{ source.diff.files | matchDiffLines(regex=r/(public|protected|private|static|final|synchronized)?\s+(static|final|synchronized)?\s+(\w+<.*\>|\w+\[\]|\w+|\void)\s+\w+\s*\(([^)]*)\)\s*\{/) | some }}
 run:
-  - action: add-comment@v1
-    args: 
+   - action: add-comment@v1
+     args: 
       comment: | 
             This PR modifies method input parameters, but is missing Javadoc changes. Please check to ensure no Javadoc changes are necessary.
