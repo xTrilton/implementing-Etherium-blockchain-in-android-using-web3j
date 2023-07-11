@@ -7,7 +7,6 @@ automations:
     if: 
        - {{ source.diff.files | matchDiffLines(regex=r/\*@param/) | nope }}
        - {{ source.diff.files | matchDiffLines(regex=r/(public|protected|private|static|final|synchronized)\s+(static|final|synchronized)?(([^)]*))/) | some }}
-       - {{ source.diff.files | matchDiffLines(regex=r/\{/) | some }}
     run:
       - action: add-label@v1
         args:
