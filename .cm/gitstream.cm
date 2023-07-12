@@ -4,7 +4,8 @@ manifest:
 automations:
    review_new_class_javadoc:
      if:
-       - {{ is.java and is.new }}
+       - {{ files | extensions | match(term='java') }}
+       #- {{ is.java and is.new }}
 run:
   - action: add-label@v1
     args:
@@ -15,9 +16,9 @@ run:
       comment: | 
           Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
 
-is:
- java: {{ files | extensions | match(term='java') }}
- new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
+#is:
+ #java: {{ files | extensions | match(term='java') }}
+ #new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
 
 colors:
   yellow: 'fbca04'
