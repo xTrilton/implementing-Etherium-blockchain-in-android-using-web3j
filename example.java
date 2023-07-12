@@ -11,6 +11,7 @@
 
 public Image getImage(URL url, String name) {
 try {
+  fgf
 return getImage(new URL(url, name));
 } catch (MalformedURLException e) {
 return null;
