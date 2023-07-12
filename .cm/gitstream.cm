@@ -6,8 +6,8 @@ automations:
   review_javadoc:
     if:
 
-      - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | some }}
-      - {{ source.diff.files | matchDiffLines(regex=r/\b(public|protected|private|static|final|synchronized)?\s+\w+\s+\w+\s*\(([^)]*)\)\s*\{/) | nope }}
+      - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//, ignoreWhiteSpaces=true) | every }}
+      #- {{ source.diff.files | matchDiffLines(regex=r/\b(public|protected|private|static|final|synchronized)?\s+\w+\s+\w+\s*\(([^)]*)\)\s*\{/) | nope }}
 
     run:
       - action: add-label@v1
