@@ -6,13 +6,11 @@ manifest:
 automations:
   percent_new_code:
     if:
-      - {{ is.java and is.new | some }} 
+      - {{ files | extensions | match(term='java') }}
+      - {{ source.diff.files | map(attr='original_file') | some) }}
     run: 
       - action: add-comment@v1
         args:
           comment: |
             This PR is  new code.
 
-is:
-    java: {{ files | extensions | match(term='java') }}
-    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
