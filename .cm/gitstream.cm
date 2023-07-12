@@ -7,7 +7,7 @@ automations:
   percent_new_code:
     if:
       - {{ files | extensions | match(term='java' | every) }}
-      #- {{ source.diff.files | map(attr='original_file') | match(term='/dev/null'| some) }}
+      #- {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') | some) }}
     run: 
       - action: add-comment@v1
         args:
