@@ -3,14 +3,9 @@ manifest:
   version: 1.0
 
 automations:
-  # Request changes for new featuresbhjbghgh that lack changelog updates. 9088y8g76fg7tyd
   review_size:
     if:
       - {{ branch.diff.size > 20 }}
-      #- {{ is.size | every }}
-    #The statement below is connected to config2
-      #- {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | nope }}
-
 run:
     - action: add-label@v1
       args:
