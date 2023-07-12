@@ -4,7 +4,7 @@ manifest:
 automations:
    review_new_class_javadoc:
      if:
-       - {{ is.java and is.new | some }}
+       - {{ is.java and is.new }}
 run:
   - action: add-label@v1
     args:
