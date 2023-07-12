@@ -6,7 +6,8 @@ manifest:
 automations:
   percent_new_code:
     if:
-      - {{ changes.ratio > 20}}
+      - {{ files | extensions | match(term='java') }}
+      - {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
     run: 
       - action: add-comment@v1
         args:
