@@ -5,7 +5,8 @@ automations:
   #https://docs.gitstream.cm/automations/review-sensitive-files/
   review_javadoc:
     if:
-      - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*([\s\S]*?)\*\//) | some}}
+
+      - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | some }}
       - {{ source.diff.files | matchDiffLines(regex=r/\b(public|protected|private|static|final|synchronized)?\s+\w+\s+\w+\s*\(([^)]*)\)\s*\{/) | nope }}
 
     run:
@@ -13,9 +14,6 @@ automations:
         args:
             label: "📓Javadoc Only"
             color: {{ colors.green }}
-      #- action: add-reviewers@v1
-        #args:
-           #reviewers: [my-organization/tech-writers]
       - action: approve@v1
       
 colors:
