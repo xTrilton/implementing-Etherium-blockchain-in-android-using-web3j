@@ -2,12 +2,19 @@
 manifest:
   version: 1.0
 automations:
-  review_parameters: 
-    if:  
-       - {{ source.diff.files | matchDiffLines(regex=r/\*\s@param/) | nope }}
-       - {{ source.diff.files | matchDiffLines(regex=r/\b(public|protected|private|static|final|synchronized)?\s+\w+\s+\w+\s*\(([^)]*)\)\s*\{/) | some }}
+  #https://docs.gitstream.cm/automations/review-sensitive-files/
+  review_javadoc:
+    if:
+      - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | some }}
     run:
-      - action: add-comment@v1
-        args: 
-           comment: | 
-              This PR modifies method input parameters, but is missing Javadoc changes. Please check to ensure no Javadoc changes are necessary.
+      - action: add-label@v1
+        args:
+            label: "📓Javadoc Only"
+            color: {{ colors.green }}
+      #- action: add-reviewers@v1
+        #args:
+           #reviewers: [my-organization/tech-writers]
+      - action: approve@v1
+      
+colors:
+  green: '0e8a16'
