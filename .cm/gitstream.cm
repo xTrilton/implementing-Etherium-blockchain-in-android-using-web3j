@@ -5,7 +5,7 @@ automations:
   #https://docs.gitstream.cm/automations/review-sensitive-files/
   review_javadoc:
     if:
-      - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*([\s\S]*?)\*\//) | every}}
+      - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*([\s\S]*?)\*\//, ignoreWhiteSpaces=true) | every}}
     run:
       - action: add-label@v1
         args:
