@@ -6,7 +6,7 @@ manifest:
 automations:
   percent_new_code:
     if:
-      - true
+      - {{ changes.ratio > 20}}
     run: 
       - action: add-comment@v1
         args:
