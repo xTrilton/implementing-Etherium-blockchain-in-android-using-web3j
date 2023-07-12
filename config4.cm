@@ -4,11 +4,12 @@ manifest:
 
 automations:
   # Request changes for new featuresbhjbghgh that lack changelog updates. 9088y8g76fg7tyd
-  review_javadoc_large:
+  review_size:
     if:
-      - {{ is.size | every }}
+      - {{ branch.diff.size < 20 }}
+      #- {{ is.size | every }}
     #The statement below is connected to config2
-      - {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | nope }}
+      #- {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | nope }}
 
 run:
     - action: add-label@v1
@@ -21,19 +22,6 @@ run:
         comment: | 
              This PR makes major changes to Java classes, but is missing updates to Javadoc. Please double check for any necessary Javadoc updates.
      
-    - action: require-reviewers@v1
-      args:
-          reviewers: [my-organization/tech-writers]
-is:
-    size: {{ changes.ratio >= 25 }}
-
-changes:
-  # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
-  # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
-  # Calculate the ratio of new code
-  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
-
-colors:
-  yellow: 'fbca04'
+    #- action: require-reviewers@v1
+      #args:
+          #reviewers: [my-organization/tech-writers]
