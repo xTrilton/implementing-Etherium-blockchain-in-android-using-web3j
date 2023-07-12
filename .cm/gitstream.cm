@@ -6,18 +6,13 @@ manifest:
 automations:
   percent_new_code:
     if:
-      - {{ files | extensions | match(term='java') }}
-      - {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
+      - {{ is.java and is.new | some }} 
     run: 
       - action: add-comment@v1
         args:
           comment: |
-            This PR is {{ changes.ratio }}% new code.
+            This PR is  new code.
 
-changes:
-  # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
-  # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
-  # Calculate the ratio of new code
-  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
+is:
+    java: {{ files | extensions | match(term='java') }}
+    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
