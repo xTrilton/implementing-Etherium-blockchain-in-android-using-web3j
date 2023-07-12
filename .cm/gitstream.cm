@@ -14,6 +14,9 @@ automations:
         args:
             label: "📓Javadoc Only"
             color: {{ colors.green }}
+      - action: add-reviewers@v1
+        args:
+          reviewers: [popeye, olive, acme/team-a]
       - action: approve@v1
       
 colors:
