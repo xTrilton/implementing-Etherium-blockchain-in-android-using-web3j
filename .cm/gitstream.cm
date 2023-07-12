@@ -1,22 +1,22 @@
 # -*- mode: yaml -*-
+
 manifest:
   version: 1.0
 
 automations:
-  review_size:
+  percent_new_code:
     if:
-      - {{ branch.diff.size > 20 }}
-run:
-    - action: add-label@v1
-      args:
-          label: "⚠️ No Javadoc"
-          color: {{ colors.yellow }}
+      - true
+    run: 
+      - action: add-comment@v1
+        args:
+          comment: |
+            This PR is {{ changes.ratio }}% new code.
 
-    - action: add-comment@v1
-      args: 
-        comment: | 
-             This PR makes major changes to Java classes, but is missing updates to Javadoc. Please double check for any necessary Javadoc updates.
-     
-    #- action: require-reviewers@v1
-      #args:
-          #reviewers: [my-organization/tech-writers]
+changes:
+  # Sum all the lines added/edited in the PR
+  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
+  # Sum all the line removed in the PR
+  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
+  # Calculate the ratio of new code
+  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
