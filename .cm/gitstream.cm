@@ -7,7 +7,7 @@ automations:
   # This uses the `has` custom expression found at the bottom of this file
   label_deleted_files:
     if:
-      - {{ has.deleted_files }}
+      - {{ is.java and is.new }}
     run: 
       - action: add-label@v1
         args:
@@ -15,5 +15,6 @@ automations:
           color: '#DF9C04'
 
 # This is used in the `label_deleted_files` automation
-has:
-  deleted_files: {{ source.diff.files | map(attr='original_file', regex=r/\/dev\/null/) | some }}
+is:
+    java: {{ files | extensions | match(term='java') }}
+    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
