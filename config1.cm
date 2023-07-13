@@ -3,13 +3,12 @@ manifest:
   version: 1.0
 automations:
   # Request changes for new features
-
-   review_new_class_javadoc:
-
-     if:
-      - {{ is.java and is.new | some }}
-      - {{ source.diff.files | includes(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\//) | some }}
-run:
+  review_new_class_javadoc:
+     if:   
+       #- {{ files | extensions | match(term='java') | every }}
+       - {{ source.diff.files | map(attr='original_file') | includes(term='/dev/null') | some }}
+      #- {{ source.diff.files | includes(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\//) | some }}
+     run:
       - action: add-label@v1
         args:
           label: "⚠️ Missing Javadoc"
@@ -18,10 +17,6 @@ run:
         args: 
           comment: | 
             Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
-
-is:
-    java: {{ files | extensions | match(term='java') }}
-    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
 
 colors:
   yellow: 'fbca04'
