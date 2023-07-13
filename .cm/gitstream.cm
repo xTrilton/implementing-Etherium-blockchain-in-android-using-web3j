@@ -16,5 +16,5 @@ automations:
 
 # This is used in the `label_deleted_files` automation
 is:
-    java: {{ files | extensions | match(term='java') }}
-    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
+    java: {{ files | extensions | match(term='java') | every }}
+    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') | some }}
