@@ -16,4 +16,4 @@ automations:
 
 # This is used in the `label_deleted_files` automation
 has:
-  deleted_files: {{ source.diff.files | map(attr='new_file') | match(term='/dev/null') | some }}
+  deleted_files: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') | some }}
