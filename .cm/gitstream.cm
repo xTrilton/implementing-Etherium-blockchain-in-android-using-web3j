@@ -1,20 +1,19 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-automations:
-  # Request changes for new features
-  review_new_class_javadoc:
-     if:   
-       - {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
-     run:
-       - action: add-label@v1
-         args:
-           label: "⚠️ Missing Javadoc"
-           color: {{ colors.yellow }}
-       - action: add-comment@v1
-         args: 
-           comment: | 
-              Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
 
-colors:
-  yellow: 'fbca04'
+automations:
+  # Apply a label that indicates when a PR deletes files
+  # This uses the `has` custom expression found at the bottom of this file
+  label_deleted_files:
+    if:
+      - {{ has.deleted_files }}
+    run: 
+      - action: add-label@v1
+        args:
+          label: 'deleted-files'
+          color: '#DF9C04'
+
+# This is used in the `label_deleted_files` automation
+has:
+  deleted_files: {{ source.diff.files | map(attr='new_file') | match(term='/dev/null') | some }}
