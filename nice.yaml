@@ -1,0 +1,1 @@
+{{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
