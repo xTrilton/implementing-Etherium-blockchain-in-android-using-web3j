@@ -5,9 +5,7 @@ automations:
   # Request changes for new features
   review_new_class_javadoc:
      if:   
-       #- {{ files | extensions | match(term='java') | every }}
-       - {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') | some }}
-      #- {{ source.diff.files | includes(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\//) | some }}
+       - {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') }}
      run:
        - action: add-label@v1
          args:
