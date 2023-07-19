@@ -2,10 +2,9 @@
 manifest:
   version: 1.0
 automations:
-  review_parameters: 
+  review_new_class: 
     if:  
-       - {{ files | extensions | match(list=['js', 'ts']) | every }}
-       - {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
+       - {{ is.java and is.new }} 
        - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | nope }}
     run:
       - action: add-label@v1
@@ -16,5 +15,10 @@ automations:
         args: 
           comment: | 
             JSDoc is required for all Java classes. Please add JSDoc to all new classes in this PR.
+
+is:
+    javascript: {{ files | extensions | match(list=['js', 'ts']) | every }}
+    new: {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
+
 colors:
   yellow: 'fbca04'
