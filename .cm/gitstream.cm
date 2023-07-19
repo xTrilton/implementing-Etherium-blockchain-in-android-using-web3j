@@ -4,10 +4,10 @@ manifest:
 automations:
   review_parameters: 
     if:  
-       - {{ source.diff.files | matchDiffLines(regex=r/\*\s@param/) | nope }}
-       - {{ source.diff.files | matchDiffLines(regex=r/function|(\w+)\s*\((.*?)\)/) | some }}
+       - {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
     run:
      - action: add-comment@v1
        args: 
          comment: | 
-             This PR modifies method input parameters, but is missing JSDoc changes. Please check to ensure no JSDoc changes are necessary.
+             This file is new.
+
