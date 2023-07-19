@@ -4,9 +4,9 @@ manifest:
 automations:
   review_parameters: 
     if:  
-      #- {{ files | extensions | match(term='js') | every }}
+       - {{ files | extensions | match(term='js') | every }}
       #- {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
-      - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | nope }}
+      #- {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | nope }}
     run:
       - action: add-label@v1
         args:
