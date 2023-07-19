@@ -7,7 +7,7 @@ automations:
   review_parameters: 
     if:  
        - {{ source.diff.files | matchDiffLines(regex=r/\*\s@param/) | nope }}
-       - {{ source.diff.files | matchDiffLines(regex=r/\b(public|protected|private|static|final|synchronized)?\s+\w+\s+\w+\s*\(([^)]*)\)\s*\{/) | some }}
+       - {{ source.diff.files | matchDiffLines(regex=r/function|(\w+)\s*\((.*?)\)/) | some }}
 run:
  - action: add-comment@v1
    args: 
