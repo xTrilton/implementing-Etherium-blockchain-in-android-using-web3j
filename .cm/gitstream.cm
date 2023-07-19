@@ -4,7 +4,7 @@ manifest:
 automations:
   review_new_class: 
     if:  
-       - {{ is.java and is.new }} 
+       - {{ is.javascript and is.new }} 
        - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | nope }}
     run:
       - action: add-label@v1
