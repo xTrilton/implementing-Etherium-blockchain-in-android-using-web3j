@@ -4,10 +4,20 @@ manifest:
 automations:
   review_parameters: 
     if:  
+       - {{ is.javascript and is.new}}
        - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | nope }}
     run:
-     - action: add-comment@v1
-       args: 
-         comment: | 
-             This file is new.
+      - action: add-label@v1
+        args:
+          label: "⚠️ Missing JSDoc"
+          color: {{ colors.yellow }}
+      - action: add-comment@v1
+        args: 
+          comment: | 
+            JSDoc is required for all Java classes. Please add JSDoc to all new classes in this PR.
+is:
+    javascript: {{ files | extensions | match(term='js') }}
+    new: {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
 
+colors:
+  yellow: 'fbca04'
