@@ -1,20 +1,15 @@
 # -*- mode: yaml -*-
+
 manifest:
   version: 1.0
 
 automations:
-  # Apply a label that indicates when a PR deletes files
-  # This uses the `has` custom expression found at the bottom of this file
-  label_deleted_files:
-    if:
-      - {{ is.java and is.new }}
-    run: 
-      - action: add-label@v1
-        args:
-          label: 'deleted-files'
-          color: '#DF9C04'
-
-# This is used in the `label_deleted_files` automation
-is:
-    java: {{ files | extensions | match(term='java') | every }}
-    new: {{ source.diff.files | map(attr='original_file') | match(term='/dev/null') | some }}
+  review_parameters: 
+    if:  
+       - {{ source.diff.files | matchDiffLines(regex=r/\*\s@param/) | nope }}
+       - {{ source.diff.files | matchDiffLines(regex=r/function|(\w+)\s*\((.*?)\)/) | some }}
+run:
+ - action: add-comment@v1
+   args: 
+      comment: | 
+        This PR modifies method input parameters, but is missing Javadoc changes. Please check to ensure no Javadoc changes are necessary.
