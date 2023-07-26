@@ -2,23 +2,18 @@
 manifest:
   version: 1.0
 automations:
-  review_new_class: 
+  review_new_class:  
     if:  
-       - {{ is.javascript and is.new }} 
-       - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | nope }}
+       - {{ pr.label | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
     run:
       - action: add-label@v1
         args:
-          label: "⚠️ Missing JSDoc"
+          label: "⚠️ Missing Required Labels"
           color: {{ colors.yellow }}
       - action: add-comment@v1
         args: 
           comment: | 
-            JSDoc is required for all Java classes. Please add JSDoc to all new classes in this PR.
-
-is:
-    javascript: {{ files | extensions | match(list=['js', 'ts']) | every }}
-    new: {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
+               All PRs to this repo must include one or more of the following labels: {{Mobile, Core, Docs, and Test }}. Please resolve this before requesting a review.
 
 colors:
   yellow: 'fbca04'
