@@ -1,27 +1,15 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-
 automations:
-  # Request changes for new featuresbhjbghgh that lack changelog updates. 9088y8g76fg7tyd
-  review_size:
-    if:
-      - {{ branch.diff.size < 20 }}
-      #- {{ is.size | every }}
-    #The statement below is connected to config2
-      #- {{ source.diff.files | matchDiffLines(regex=r/\/\*\*[\s\S]*?\*\/) | nope }}
-
-run:
-    - action: add-label@v1
-      args:
-          label: "⚠️ No Javadoc"
+  pr_label_guidance:  
+    if:  
+       - {{ pr.unresolved_threads > 0 }}
+    run:
+     - action: add-label@v1
+        args:
+          label: "🔁 Changes Requested"
           color: {{ colors.yellow }}
-
-    - action: add-comment@v1
-      args: 
-        comment: | 
-             This PR makes major changes to Java classes, but is missing updates to Javadoc. Please double check for any necessary Javadoc updates.
-     
-    #- action: require-reviewers@v1
-      #args:
-          #reviewers: [my-organization/tech-writers]
+      
+colors:
+  yellow: 'fbca04'
