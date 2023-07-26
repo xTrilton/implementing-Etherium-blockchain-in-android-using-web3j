@@ -2,21 +2,18 @@
 manifest:
   version: 1.0
 automations:
-  # Request changes for new features
-  review_new_class_javadoc:
-     if:   
-       #- {{ files | extensions | match(term='java') | every }}
-       - {{ source.diff.files | map(attr='original_file') | includes(term='/dev/null') | some }}
-      #- {{ source.diff.files | includes(regex=r/\/\*\*[\s\S]*?@param[\s\S]*?@return[\s\S]*?\*\//) | some }}
-     run:
+  review_new_class:  
+    if:  
+       - {{ pr.label | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
+    run:
       - action: add-label@v1
         args:
-          label: "⚠️ Missing Javadoc"
+          label: "⚠️ Missing Required Labels"
           color: {{ colors.yellow }}
       - action: add-comment@v1
         args: 
           comment: | 
-            Javadoc is required for all Java classes. Please add Javadocs to all new classes in this PR.
+               All PRs to this repo must include one or more of the following labels: {{Mobile, Core, Docs, and Test }}. Please resolve this before requesting a review.
 
 colors:
   yellow: 'fbca04'
