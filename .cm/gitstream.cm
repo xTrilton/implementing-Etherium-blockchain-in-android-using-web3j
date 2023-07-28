@@ -8,4 +8,4 @@ automations:
     run:
       - action: add-label@v1
         args:
-          label: {{ pr.approvals | length }}
+          label: Approved {{ pr.approvals | length }} times
