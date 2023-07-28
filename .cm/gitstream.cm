@@ -1,12 +1,12 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-automations:
 
-{% for item in labels %}
-  enforce_required_labels{{ item.team }}:  
+automations:
+  {% for item in labels %}
+  enforce_required_labels_{{ item.team }}:  
     if: 
-      - {{ pr.labels == 'Core' | 'Mobile' | 'Docs' | 'Test' }}  
+      - {{ pr.labels == item.name }}  
 
     #- {{ pr.labels | match(list=(Mobile | 'Core' | 'Docs' | 'Test') | nope }}
     run:
@@ -18,10 +18,8 @@ automations:
         args: 
           comment: | 
                All  good
-{% endfor %}
+  {% endfor %}
 
-colors:
-  yellow: 'fbca04'
 
 labels
   - team: Android
@@ -32,3 +30,6 @@ labels
     name: Docs
   - team: QA
     name: Testing
+
+colors:
+  yellow: 'fbca04'
