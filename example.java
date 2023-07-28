@@ -7,6 +7,7 @@
 * @param  name the location of the image, relative to the url argument
 * @return  the image at the specified URL
 * @see Image
+yut
 */
 
 public Image getImage(URL url, String name) {
