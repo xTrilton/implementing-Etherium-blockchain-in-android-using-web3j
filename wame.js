@@ -1,4 +1,5 @@
-/**
+
+oneday/**
  * @return {PromiseLike<string>}
  */
 function ps() {}
