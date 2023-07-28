@@ -3,8 +3,9 @@ manifest:
   version: 1.0
 automations:
   enforce_required_labels:  
-    if:  
-       - {{ pr.labels | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
+    if: 
+       - true
+       #- {{ pr.labels | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
     run:
       - action: add-label@v1
         args:
@@ -13,7 +14,7 @@ automations:
       - action: add-comment@v1
         args: 
           comment: | 
-               All PRs to this repo must include one or more of the following labels: Mobile, Core, Docs, and Test. Please resolve this before requesting a review.
+               All  {{pr.labels}}
 
 colors:
   yellow: 'fbca04'
