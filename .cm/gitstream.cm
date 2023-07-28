@@ -16,7 +16,7 @@ automations:
       - action: add-comment@v1
         args: 
           comment: | 
-               All  good
+               All PRs to this repo must include one or more of the following labels: Mobile, Core, Docs, and Test. Please resolve this before requesting a review.
   {% endfor %}
 
 labels:
