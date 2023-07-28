@@ -8,7 +8,6 @@ automations:
     if: 
       - {{ pr.labels == item.name }}  
 
-    #- {{ pr.labels | match(list=(Mobile | 'Core' | 'Docs' | 'Test') | nope }}
     run:
       - action: add-label@v1
         args:
@@ -19,7 +18,6 @@ automations:
           comment: | 
                All  good
   {% endfor %}
-
 
 labels:
   - team: Android
