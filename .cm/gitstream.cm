@@ -4,11 +4,11 @@ manifest:
 automations:
   label_requested_chnages:  
     if:  
-       - {{ pr.unresolved_threads >= 1 }}
+       - true
     run:
       - action: add-label@v1
         args:
-          label: "🔁 Changes Requested"
+          label: Changes Requested {{ pr.unresolved_threads }}
           color: {{ colors.yellow }}
       
 colors:
