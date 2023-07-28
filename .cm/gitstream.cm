@@ -6,7 +6,7 @@ automations:
   {% for item in labels %}
   enforce_required_labels_{{ item.team }}:  
     if: 
-      - {{ pr.labels == item.name }}  
+      - {{ pr.labels == item.name | nope }}  
 
     run:
       - action: add-label@v1
