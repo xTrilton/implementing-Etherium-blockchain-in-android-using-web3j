@@ -2,7 +2,9 @@
 manifest:
   version: 1.0
 automations:
-  enforce_required_labels:  
+
+{% for item in labels %}
+  enforce_required_labels{{ item.team }}:  
     if: 
       - {{ pr.labels == 'Core' | 'Mobile' | 'Docs' | 'Test' }}  
 
@@ -16,6 +18,17 @@ automations:
         args: 
           comment: | 
                All  good
+{% endfor %}
 
 colors:
   yellow: 'fbca04'
+
+labels
+  - team: Android
+    name: Mobile
+  - team: Development
+    name: Core
+  - team: Techwriting
+    name: Docs
+  - team: QA
+    name: Testing
