@@ -2,7 +2,7 @@
 manifest:
   version: 1.0
 automations:
-  review_parameters: 
+  approval_number: 
     if:  
        - true
     run:
