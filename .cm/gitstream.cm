@@ -4,7 +4,7 @@ manifest:
 automations:
   label_requested_chnages:  
     if:  
-       - {{ pr.unresolved_threads > 0 }}
+       - {{ pr.unresolved_threads >= 1 }}
     run:
       - action: add-label@v1
         args:
