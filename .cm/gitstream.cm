@@ -4,9 +4,9 @@ manifest:
 automations:
   pr_label_guidance:  
     if:  
-       - true
+       - {{ pr.labels | length == 0}}
     run:
       - action: add-comment@v1
         args: 
           comment: | 
-              hello  {{ pr.labels | length }}
+              hello  
