@@ -2,10 +2,14 @@
 manifest:
   version: 1.0
 automations:
-  approval_number: 
+  label_requested_chnages:  
     if:  
-       - true
+       - {{ pr.unresolved_threads > 0 }}
     run:
-      - action: add-label@v1
+     - action: add-label@v1
         args:
-          label: Approved {{ pr.approvals | length }} times
+          label: "🔁 Changes Requested"
+          color: {{ colors.yellow }}
+      
+colors:
+  yellow: 'fbca04'
