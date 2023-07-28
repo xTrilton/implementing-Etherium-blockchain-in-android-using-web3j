@@ -2,7 +2,7 @@
 manifest:
   version: 1.0
 automations:
-  pr_label_guidance:  
+  label_requested_chnages:  
     if:  
        - {{ pr.unresolved_threads > 0 }}
     run:
