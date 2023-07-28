@@ -11,7 +11,7 @@ automations:
     run:
       - action: add-label@v1
         args:
-          label: "⚠️ Missing Required Labels"
+          label: "Missing Required Labels"
           color: {{ colors.yellow }}
       - action: add-comment@v1
         args: 
