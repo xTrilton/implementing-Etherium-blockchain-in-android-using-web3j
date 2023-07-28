@@ -4,9 +4,9 @@ manifest:
 automations:
   pr_label_guidance:  
     if:  
-       - {{ pr.labels | match(regex=r/\w+/) | some }}
+       - true
     run:
       - action: add-comment@v1
         args: 
           comment: | 
-               All PRs must contain labels that indicate which CI/CD systems must be run. PLease update your PR to include one of the following labels: `Build: Mobile`, `Build: UI`, `Build: All`, `Build: None`
+              hello  {{ pr.labels | length }}
