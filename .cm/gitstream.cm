@@ -21,7 +21,7 @@ automations:
   {% endfor %}
 
 
-labels
+labels:
   - team: Android
     name: Mobile
   - team: Development
