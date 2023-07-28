@@ -7,7 +7,7 @@ automations:
        - {{ pr.unresolved_threads > 0 }}
     run:
      - action: add-label@v1
-        args:
+       args:
           label: "🔁 Changes Requested"
           color: {{ colors.yellow }}
       
