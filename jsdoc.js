@@ -1,4 +1,4 @@
-const myFunctionVar = function getNumber() {
+  m,m mconst myFunctionVar = function getNumber() {
   console.log(typeof funName === 'function'); // => true
   return 42;
 }
