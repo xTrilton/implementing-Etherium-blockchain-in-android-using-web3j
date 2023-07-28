@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_required_labels:  
     if: 
-      - {{ pr.labels == ('Mobile' | 'Core' | 'Docs' | 'Test') }}  
+      - {{ pr.labels == 'Core' | 'Mobile' | 'Docs' | 'Test' }}  
 
     #- {{ pr.labels | match(list=(Mobile | 'Core' | 'Docs' | 'Test') | nope }}
     run:
