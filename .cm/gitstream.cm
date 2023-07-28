@@ -2,14 +2,18 @@
 manifest:
   version: 1.0
 automations:
-  label_requested_chnages:  
+  enforce_required_labels:  
     if:  
-       - true
+       - {{ pr.label | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
     run:
       - action: add-label@v1
         args:
-          label: Changes Requested {{ pr.unresolved_threads }}
+          label: "⚠️ Missing Required Labels"
           color: {{ colors.yellow }}
-      
+      - action: add-comment@v1
+        args: 
+          comment: | 
+               All PRs to this repo must include one or more of the following labels: {{Mobile, Core, Docs, and Test }}. Please resolve this before requesting a review.
+
 colors:
   yellow: 'fbca04'
