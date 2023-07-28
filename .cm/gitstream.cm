@@ -4,8 +4,8 @@ manifest:
 automations:
   enforce_required_labels:  
     if: 
-       - true
-       #- {{ pr.labels | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
+     - {{ pr.labels == 'Mobile' }}  
+    #- {{ pr.labels | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
     run:
       - action: add-label@v1
         args:
@@ -14,7 +14,7 @@ automations:
       - action: add-comment@v1
         args: 
           comment: | 
-               All  {{pr.labels}}
+               All  good
 
 colors:
   yellow: 'fbca04'
