@@ -16,7 +16,7 @@ automations:
 
 sources:
     branches: {{ branch.name | includes(regex=item.branch) }}
-    path:  {{ files | match(regex=item.resources) }}
+    path:  {{ files | match(list=item.resources) }}
 
 labels:
   - name: Core
