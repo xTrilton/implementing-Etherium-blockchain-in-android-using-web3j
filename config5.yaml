@@ -11,8 +11,7 @@ automations:
     run:
       - action: add-label@v1
         args:
-          label: 'deprecated-component'
-          color: '#FF0000'
+          label: {{ colors.red if (item.rating == 'E' or item.rating == 'D') else (colors.orange if (item.rating == 'C' ) else colors.yellow) }}
   {% endfor %}
 
 sources:
