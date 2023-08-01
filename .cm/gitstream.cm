@@ -6,7 +6,7 @@ automations:
   {% for item in labels %}
   label_automations_{{ item.name }}:
       if:
-        - true
+        - sourcepath.branches or sourcepath.path
       run:
         - action: add-label@v1
           args:
@@ -15,6 +15,7 @@ automations:
 
 sourcepath:
   branchcore: {{ branch.name | includes(term="core") }}
+  branches: {{ branch.name | includes(regex=item.branch) }}
   branchmobile: {{ branch.name | includes(term="mobile") }}
   path:  {{ files | match(list=item.resources) }}
 
