@@ -10,7 +10,7 @@ automations:
       run:
         - action: add-label@v1
           args:
-            label: '{{ Core if (sourcepath.branchcore and sourcepath.path) else (mobile if (sourcepath.branchmobile and sourcepath.path)) }}'
+            label: 'Boemo {{ Core if (sourcepath.branchcore and sourcepath.path) else (mobile if (sourcepath.branchmobile and sourcepath.path)) }}'
    {% endfor %}
 
 sourcepath:
