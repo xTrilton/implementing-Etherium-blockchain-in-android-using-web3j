@@ -1,0 +1,4 @@
+sensitive_files:
+  - src/app/auth/
+  - src/app/routing/
+  - src/app/resources/
