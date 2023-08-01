@@ -5,25 +5,27 @@ manifest:
 automations:
   {% for item in labels %}
 
-  review_deprecated_component_{{ item.name }}:
-    if:
-      - {{ files | match(list=item.resources) }}
-    run:
-      - action: add-label@v1
-        args:
-          label: "boemo"
+    label_automations_{{ item.name }}:
+      if:
+        - true
+       run:
+        - action: add-label@v1
+          args:
+            label: {{ item.labelname if (sourcepath.branches or sourcepath.path) }}
   {% endfor %}
 
 sourcepath:
-    branches: {{ branch.name | includes(regex=item.branch) }}
-    path:  {{ files | match(list=item.resources) }}
+  branches: {{ branch.name | includes(regex=item.branch) }}
+  path:  {{ files | match(list=item.resources) }}
 
 labels:
   - name: Core
+    labelname: Core
     resources:
     - src/app
     branch: r/^core-/
   - name: mobile
+    labelname: mobile
     resources:
     - src/android
     - src/ios
