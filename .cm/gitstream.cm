@@ -11,7 +11,7 @@ automations:
     run:
       - action: add-label@v1
         args:
-          label: {{ item.name if (sourcepath.branches and sourcepath.path)}}
+          label: {{ labels.name if (sourcepath.branches and sourcepath.path)}}
   {% endfor %}
 
 sourcepath:
