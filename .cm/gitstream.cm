@@ -10,11 +10,12 @@ automations:
       run:
         - action: add-label@v1
           args:
-            label: '{{ labels.name if (sourcepath.branches or sourcepath.path) }}'
+            label: '{{ Core if (sourcepath.branchcore or sourcepath.path) else (mobile if (sourcepath.branchmobile or sourcepath.path))}}'
    {% endfor %}
 
 sourcepath:
-  branches: {{ branch.name | includes(regex=item.branch) }}
+  branchcore: {{ branch.name | includes(term="core") }}
+  branchmobile: {{ branch.name | includes(term="mobile") }}
   path:  {{ files | match(list=item.resources) }}
 
 labels:
