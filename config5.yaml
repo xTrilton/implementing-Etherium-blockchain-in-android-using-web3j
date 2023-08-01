@@ -3,7 +3,7 @@ manifest:
   version: 1.0
 
 automations:
-  {% for item in deprecated %}
+  {% for item in labels %}
 
   review_deprecated_component_{{ item.name }}:
     if:
@@ -15,8 +15,8 @@ automations:
   {% endfor %}
 
 sources:
-    branch: {{ branch.name | includes(term="feature") }}
-    path:  {{ files | match(regex=r/^docs\/changelog\.md$/) }}
+    branches: {{ branch.name | includes(regex=item.branch) }}
+    path:  {{ files | match(regex=item.resources) }}
 
 # These are the deprecated files that are evaluated in catch_deprecated_components
 labels:
