@@ -7,11 +7,11 @@ automations:
 
   review_deprecated_component_{{ item.name }}:
     if:
-      - true
+      - {{ branch.name | includes(regex=item.branch) }}
     run:
       - action: add-label@v1
         args:
-          label: {{ labels.name if (sourcepath.branches and sourcepath.path)}}
+          label: "boemo"
   {% endfor %}
 
 sourcepath:
