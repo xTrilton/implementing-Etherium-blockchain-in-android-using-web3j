@@ -11,12 +11,12 @@ automations:
     run:
       - action: add-label@v1
         args:
-          label: {{ colors.red if (item.rating == 'E' or item.rating == 'D') else (colors.orange if (item.rating == 'C' ) else colors.yellow) }}
+          label: {{ item.name if (branch.name | includes(term="feature") and  files | match(regex=r/^docs\/changelog\.md$/)) else (branch.name | includes(term="feature") and  files | match(regex=r/^docs\/changelog\.md$/)) }}
   {% endfor %}
 
 sources:
- branch: {{ branch.name | includes(term="feature") }}
- path:  {{ files | match(regex=r/^docs\/changelog\.md$/) }}
+    branch: {{ branch.name | includes(term="feature") }}
+    path:  {{ files | match(regex=r/^docs\/changelog\.md$/) }}
 
 # These are the deprecated files that are evaluated in catch_deprecated_components
 labels:
