@@ -1,4 +1,4 @@
-/**
+fff/**
  * @return {PromiseLike<string>}
  */
 function ps() {}
