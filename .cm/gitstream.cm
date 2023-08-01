@@ -7,7 +7,7 @@ automations:
 
   review_deprecated_component_{{ item.name }}:
     if:
-      - {{ branch.name | includes(regex=item.branch) }}
+      - {{ files | match(list=item.resources) }}
     run:
       - action: add-label@v1
         args:
