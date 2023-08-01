@@ -10,24 +10,22 @@ automations:
   review_deprecated_component_{{ item.old }}:
     # Triggered when any of the modified files use a deprecated component
     if:
-      - {{ source.diff.files | matchDiffLines(regex=item.regex) | some }}
-    # Apply a deprecated-component label, request changes, and post a comment with an explanation.
+      - true
     run:
       - action: add-label@v1
         args:
           label: 'deprecated-component'
           color: '#FF0000'
-      - action: request-changes@v1
-        args:
-          comment: |
-            `{{ item.old }}` component is deprecated, use `{{ item.new }}` instead
   {% endfor %}
 
 # These are the deprecated files that are evaluated in catch_deprecated_components
-deprecated:
-  - regex: r/oldAPI/
-    old: oldAPI
-    new: newAPI
-  - regex: r/anotherOldAPI/
-    old: anotherOldAPI
-    new: anotherNewAPI
+labels:
+  - name: Core
+    resources:
+    - src/app
+    branch: r/^core-/
+  - name: mobile
+    resources:
+    - src/android
+    - src/ios
+    branch: r/^mobile-/
