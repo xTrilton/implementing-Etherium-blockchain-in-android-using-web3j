@@ -4,22 +4,27 @@ manifest:
 
 automations:
   {% for item in labels %}
-  label_automations_{{ item.name }}:
-      if:
-        - {{ files | match(list=item.resources) }}
-      run:
-        - action: add-label@v1
-          args:
-            label: {{ item.name }}
-   {% endfor %}
+  enforce_required_labels_{{ item.team }}:  
+    if: 
+      - {{ pr.labels | match(list=labels) }}  
+
+    run:
+      - action: add-label@v1
+        args:
+          label: "Missing Required Labels"
+          color: {{ colors.yellow }}
+      - action: add-comment@v1
+        args: 
+          comment: | 
+               All PRs to this repo must include one or more of the following labels: Mobile, Core, Docs, and Test. Please resolve this before requesting a review.
+  {% endfor %}
 
 labels:
-  - name: Core
-    resources:
-    - src/app
-    branch: r/^core-/
-  - name: mobile
-    resources:
-    - src/android
-    - src/ios
-    branch: r/^mobile-/
+  - Mobile
+  - Core
+  - Docs
+  - Test
+
+colors:
+  yellow: 'fbca04'
+
