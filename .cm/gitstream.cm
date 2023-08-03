@@ -6,27 +6,19 @@ automations:
   {% for item in labels %}
   label_automations_{{ item.name }}:
       if:
-        - sourcepath.branches or sourcepath.path
+        - {{ files | match(list=item.resources) }}
       run:
         - action: add-label@v1
           args:
-            label: 'sejo {{ Core if (sourcepath.branchcore and sourcepath.path) else (mobile if (sourcepath.branchmobile and sourcepath.path)) }}'
+            label: {{ item.name }}
    {% endfor %}
-
-sourcepath:
-  branchcore: {{ branch.name | includes(term="core") }}
-  branches: {{ branch.name | includes(regex=item.branch) }}
-  branchmobile: {{ branch.name | includes(term="mobile") }}
-  path:  {{ files | match(list=item.resources) }}
 
 labels:
   - name: Core
-    labelname: Core
     resources:
     - src/app
     branch: r/^core-/
   - name: mobile
-    labelname: mobile
     resources:
     - src/android
     - src/ios
