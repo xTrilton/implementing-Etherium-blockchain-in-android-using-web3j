@@ -5,7 +5,7 @@ manifest:
 automations:
   enforce_required_labels:  
     if: 
-      - {{ pr.labels | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}  
+      - {{ pr.labels | match(list=required_labels) | nope }}  
     run:
       - action: add-label@v1
         args:
@@ -24,4 +24,3 @@ required_labels:
 
 colors:
   yellow: 'fbca04'
-
