@@ -3,11 +3,9 @@ manifest:
   version: 1.0
 
 automations:
-  {% for item in labels %}
-  enforce_required_labels_{{ item.team }}:  
+  enforce_required_labels:  
     if: 
       - {{ pr.labels | match(list=labels) | nope }}  
-
     run:
       - action: add-label@v1
         args:
@@ -17,7 +15,6 @@ automations:
         args: 
           comment: | 
                All PRs to this repo must include one or more of the following labels: Mobile, Core, Docs, and Test. Please resolve this before requesting a review.
-  {% endfor %}
 
 labels:
   - Mobile
