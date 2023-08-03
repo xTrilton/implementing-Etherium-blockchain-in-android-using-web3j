@@ -5,7 +5,7 @@ manifest:
 automations:
   enforce_required_labels:  
     if: 
-      - {{ pr.labels | match(list=labels) | nope }}  
+      - {{ pr.labels | match(list=required_labels) | nope }}  
     run:
       - action: add-label@v1
         args:
@@ -16,7 +16,7 @@ automations:
           comment: | 
                All PRs to this repo must include one or more of the following labels: Mobile, Core, Docs, and Test. Please resolve this before requesting a review.
 
-labels:
+required_labels:
   - Mobile
   - Core
   - Docs
