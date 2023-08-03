@@ -8,6 +8,7 @@
 * @return  the image at the specified URL
 * @see Image
 */
+dfd
 
 public Image getImage(URL url, String name) {
 try {
