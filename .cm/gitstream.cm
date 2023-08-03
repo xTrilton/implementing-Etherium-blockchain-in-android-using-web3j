@@ -5,7 +5,7 @@ manifest:
 automations:
   enforce_required_labels:  
     if: 
-      - {{ pr.labels | match(list={{required_labels}}) | nope }}  
+      - {{ pr.labels | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}  
     run:
       - action: add-label@v1
         args:
