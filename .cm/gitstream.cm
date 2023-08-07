@@ -6,17 +6,12 @@ automations:
   {% for item in labels %}
   label_automations_{{ item.name }}:
       if:
-        - {{ sourcepath.branches or sourcepath.path }} 
+        - {{ branch.name | includes(regex=item.branch) or files | match(list=item.resources) }} 
       run:
         - action: add-label@v1
           args:
             label: {{ item.name }}
-   
-sourcepath:
-    branches: {{ branch.name | includes(regex=item.branch) }}
-    path:  {{ files | match(list=item.resources) }}
-
-{% endfor %}
+   {% endfor %}
 
 labels:
   - name: Core
