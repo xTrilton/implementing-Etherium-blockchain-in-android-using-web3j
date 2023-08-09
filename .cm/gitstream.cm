@@ -10,7 +10,7 @@ automations:
       run:
         - action: add-label@v1
           args:
-            label: '{{ item.name }} {{ item.percent }}'
+            label: {{ item.percent }}
    {% endfor %}
 
 labels:
