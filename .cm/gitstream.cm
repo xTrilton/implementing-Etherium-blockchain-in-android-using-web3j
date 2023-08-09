@@ -2,14 +2,14 @@
 manifest:
   version: 1.0
 automations:
-  review_changelog: 
+  enforce_title_policy: 
     if:       
       - {{ pr.title | includes(regex=r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/) | nope }}
     run:
       - action: add-comment@v1
         args: 
           comment: | 
-             All PRs must be titled according to our semantic naming policy: `<type>(<scope>): <short summary>`
+             All PRs must be titled according to our semantic naming policy: <type> <scope> : <short summary>
 
              Type must be one of the following:
 
