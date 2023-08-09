@@ -5,7 +5,8 @@ automations:
   # Request changes for new features that lack changelog updates.
   review_changelog: 
     if:       
-      - {{ branch.name | includes(list=branchConvention.requiredPrefixes | nope) or branch.name | includes(regex=branchRegex") | nope}}
+      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) | nope or branch.name | includes(regex=branchRegex") | nope }}
+      - {{ branch.name | includes(list=branchConvention.ignoreList) }}
     run:
       - action: add-label@v1
         args:
@@ -16,5 +17,5 @@ automations:
 branchConvention:
   requiredPrefixes: ['feature', 'stable', 'fix']
   # This matches Jira ticket naming conventions, modify the regex to suit your project
-  branchRegex: '\b[A-Za-z]+-\d+\b'
+  branchRegex: /\b\w+-\w+\b/
   ignoreList: [ 'development', 'staging' ]
