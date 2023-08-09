@@ -5,7 +5,7 @@ automations:
   # Request changes for new features that lack changelog updates.
   review_changelog: 
     if:       
-      - {{ branch.name | includes(list=requiredPrefixes) }}
+      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) }}
     run:
       - action: add-label@v1
         args:
