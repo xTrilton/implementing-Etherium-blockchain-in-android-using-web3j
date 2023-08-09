@@ -2,10 +2,9 @@
 manifest:
   version: 1.0
 automations:
-  # Request changes for new features that lack changelog updates.
   review_changelog: 
     if:       
-      - {{ pr.title | includes(regex=r/\b(build|chore|ci|docs|feat|fix|perf|refactor|test)\b\s*.*?:\s*\w+/) }}
+      - {{ pr.title | includes(regex=r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/) }}
     run:
       - action: add-comment@v1
         args: 
