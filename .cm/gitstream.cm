@@ -4,12 +4,17 @@ manifest:
 automations:
   # Request changes for new features that lack changelog updates.
   review_changelog: 
-    if: 
-      - {{ branch.name | includes(term="feature") }}
-      - {{ files | match(regex=r/^docs\/changelog\.md$/) | nope }}
+    if:       
+      - {{ branch.name | includes(list=requiredPrefixes) }}
     run:
       - action: add-label@v1
         args:
           label: "❗ Incorrect Branch Name"
           color: {{ colors.yellow }}
       - action: close@v1
+
+branchConvention:
+  requiredPrefixes: ['feature', 'stable', 'fix']
+  # This matches Jira ticket naming conventions, modify the regex to suit your project
+  branchRegex: '\b[A-Za-z]+-\d+\b'
+  ignoreList: [ 'development', 'staging' ]
