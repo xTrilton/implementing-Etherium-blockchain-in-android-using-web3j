@@ -5,17 +5,25 @@ automations:
   # Request changes for new features that lack changelog updates.
   review_changelog: 
     if:       
-      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) | nope or branch.name | includes(regex=branchRegex") | nope }}
-      - {{ branch.name | includes(list=branchConvention.ignoreList) }}
+      - {{ pr.title | includes(regex=r/\b(build|chore|ci|docs|feat|fix|perf|refactor|test)\b\s*.*?:\s*\w+/) }}
     run:
-      - action: add-label@v1
-        args:
-          label: "❗ Incorrect Branch Name"
-          color: {{ colors.yellow }}
-      - action: close@v1
+      - action: add-comment@v1
+        args: 
+          comment: | 
+             All PRs must be titled according to our semantic naming policy: `<type>(<scope>): <short summary>`
 
-branchConvention:
-  requiredPrefixes: ['feature', 'stable', 'fix']
-  # This matches Jira ticket naming conventions, modify the regex to suit your project
-  branchRegex: /\b\w+-\w+\b/
-  ignoreList: [ 'development', 'staging' ]
+             Type must be one of the following:
+
+             * build
+             * ci 
+             * docs
+             * feature
+             * fix
+
+             Scope must be one of the following:
+
+             * common
+             * core
+             * elements
+             * forms
+             * http 
