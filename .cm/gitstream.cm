@@ -13,6 +13,22 @@ automations:
             label: '{{ item.name }} {{ item.percent }}'
    {% endfor %}
 
+labels:
+  - name: Core
+    percent: {{ changes.ratio }}
+    resources:
+    - src/app
+  - name: mobile
+    percent: {{ changes.ratio }}
+    resources:
+    - src/android
+    - src/ios   
+  - name: docs
+    percent: {{ changes.ratio }}
+    resources:
+    - docs/
+    - Readme.md
+    
 changes:
   # Sum all the lines added/edited in the PR
   additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
@@ -20,19 +36,3 @@ changes:
   deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
   # Calculate the ratio of new code
   ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
-
-labels:
-  - name: Core
-    resources:
-    - src/app
-    percent: {{ changes.ratio }}
-  - name: mobile
-    resources:
-    - src/android
-    - src/ios
-    percent: {{ changes.ratio }}
-  - name: docs
-    resources:
-    - docs/
-    - Readme.md
-    percent: {{ changes.ratio }}
