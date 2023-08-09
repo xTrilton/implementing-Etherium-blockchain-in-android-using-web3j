@@ -1,38 +1,15 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-
 automations:
-  {% for item in labels %}
-  label_automations_{{ item.name }}:
-      if:
-        - {{ files | match(list=item.resources) }}
-      run:
-        - action: add-label@v1
-          args:
-            label: {{ item.percent }}
-   {% endfor %}
-
-labels:
-  - name: Core
-    percent: {{ changes.ratio }}
-    resources:
-    - src/app
-  - name: mobile
-    percent: {{ changes.ratio }}
-    resources:
-    - src/android
-    - src/ios   
-  - name: docs
-    percent: {{ changes.ratio }}
-    resources:
-    - docs/
-    - Readme.md
-    
-changes:
-  # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
-  # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
-  # Calculate the ratio of new code
-  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
+  # Request changes for new features that lack changelog updates.
+  review_changelog: 
+    if: 
+      - {{ branch.name | includes(term="feature") }}
+      - {{ files | match(regex=r/^docs\/changelog\.md$/) | nope }}
+    run:
+      - action: add-label@v1
+        args:
+          label: "❗ Incorrect Branch Name"
+          color: {{ colors.yellow }}
+      - action: close@v1
