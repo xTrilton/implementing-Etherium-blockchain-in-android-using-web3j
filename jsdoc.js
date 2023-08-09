@@ -6,3 +6,4 @@ console.log(myFunctionVar());    // => 42
 console.log(myFunctionVar.name); // => 'getNumber'
 
 console.log(typeof getNumber);   // => 'undefined'
+fgd
