@@ -3,28 +3,21 @@ manifest:
   version: 1.0
 automations:
   enforce_title_policy: 
-    if:       
-      - {{ pr.title | includes(regex=titlePolicy.titleRegex) | nope }}
+    if:   
+      - {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
+
+what is license header???
+      - {{ files | match(regex=r/\/src/) | every }}
+      - {{ source.diff.files | matchDiffLines(regex=r/Copyright/) | some }}
+
     run:
       - action: add-comment@v1
         args: 
           comment: | 
-             All PRs must be titled according to our semantic naming policy: `<type>(<scope>): <short summary>`
+             All new files in the /src directory must include the required copyright header at the top of the file:
+             Here is the copyright header the automation should use as the example:
 
-             Type must be one of the following:
-
-             * build
-             * ci 
-             * docs
-             * feature
-             * fix
-
-             Scope must be one of the following:
-
-             * common
-             * core
-             * elements
-             * forms
-             * http 
-titlePolicy:
-    titleRegex: r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/
+              //
+              // Copyright (c) ORG  and contributors. All rights reserved.
+              // Licensed under the MIT license. See LICENSE file in the project root for details.
+              //
