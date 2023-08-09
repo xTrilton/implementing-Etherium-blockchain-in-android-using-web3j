@@ -31,7 +31,7 @@ labels:
     - src/android
     - src/ios
     percent: {{ changes.ratio }}
-   - name: docs
+  - name: docs
     resources:
     - docs/
     - Readme.md
