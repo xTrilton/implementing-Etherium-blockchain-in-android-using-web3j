@@ -4,7 +4,7 @@ manifest:
 automations:
   review_changelog: 
     if:       
-      - {{ pr.title | includes(regex=r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/) }}
+      - {{ pr.title | includes(regex=r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/) | nope }}
     run:
       - action: add-comment@v1
         args: 
