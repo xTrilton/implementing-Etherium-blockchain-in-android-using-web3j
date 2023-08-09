@@ -1,19 +1,38 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-automations:
-  enforce_required_labels:  
-    if:  
-       - {{ pr.label | match(list=['Mobile', 'Core', 'Docs', 'Test']) | nope }}
-    run:
-      - action: add-label@v1
-        args:
-          label: "⚠️ Missing Required Labels"
-          color: {{ colors.yellow }}
-      - action: add-comment@v1
-        args: 
-          comment: | 
-               All PRs to this repo must include one or more of the following labels: {{Mobile, Core, Docs, and Test }}. Please resolve this before requesting a review.
 
-colors:
-  yellow: 'fbca04'
+automations:
+  {% for item in labels %}
+  label_automations_{{ item.name }}:
+      if:
+        - {{ files | match(list=item.resources) }}
+      run:
+        - action: add-label@v1
+          args:
+            label: {{ item.percent }}
+   {% endfor %}
+
+labels:
+  - name: Core
+    percent: {{ changes.ratio }}
+    resources:
+    - src/app
+  - name: mobile
+    percent: {{ changes.ratio }}
+    resources:
+    - src/android
+    - src/ios   
+  - name: docs
+    percent: {{ changes.ratio }}
+    resources:
+    - docs/
+    - Readme.md
+    
+changes:
+  # Sum all the lines added/edited in the PR
+  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
+  # Sum all the line removed in the PR
+  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
+  # Calculate the ratio of new code
+  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
