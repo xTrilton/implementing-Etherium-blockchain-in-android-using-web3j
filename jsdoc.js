@@ -1,3 +1,5 @@
+// Copyright (c) ORG  and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for details.
 const myFunctionVar = function getNumber() {
   console.log(typeof funName === 'function'); // => true
   return 42;
