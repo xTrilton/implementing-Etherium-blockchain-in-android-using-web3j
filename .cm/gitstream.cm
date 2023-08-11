@@ -4,9 +4,9 @@ manifest:
 automations:
   enforce_branch_name: 
     if:       
-      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) | nope }}
-      - {{ branch.name | includes(regex=branchConvention.branchRegex) | nope}}
-      - {{ branch.name | includes(list=branchConvention.ignoreList) | nope }}
+      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) }}
+      - {{ branch.name | includes(regex=branchConvention.branchRegex) }}
+      - {{ branch.name | includes(list=branchConvention.ignoreList) }}
     run:
       - action: add-label@v1
         args:
