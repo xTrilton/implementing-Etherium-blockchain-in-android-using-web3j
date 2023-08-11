@@ -6,4 +6,6 @@ const myFunctionVar = function getNumber() {
 console.log(myFunctionVar());    // => 42
 console.log(myFunctionVar.name); // => 'getNumber'
 
+nj
+
 console.log(typeof getNumber);   // => 'undefined'
