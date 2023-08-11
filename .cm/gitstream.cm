@@ -3,10 +3,8 @@ manifest:
   version: 1.0
 automations:
   enforce_branch_name: 
-    if:       
-      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) }}
-      - {{ branch.name | includes(regex=branchConvention.branchRegex) }}
-      - {{ branch.name | includes(list=branchConvention.ignoreList) }}
+    if:  
+       - {{ files | match(regex=r/^docs\/changelog\.md$/) | nope }}
     run:
       - action: add-label@v1
         args:
