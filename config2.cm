@@ -6,7 +6,7 @@ automations:
   review_changelog: 
     if:       
       - {{ branch.name | includes(list=branchConvention.requiredPrefixes) | nope or branch.name | includes(regex=branchRegex") | nope }}
-      - {{ branch.name | includes(list=branchConvention.ignoreList) }}
+      - {{ branch.name | includes(list=branchConvention.ignoreList) | nope }}
     run:
       - action: add-label@v1
         args:
