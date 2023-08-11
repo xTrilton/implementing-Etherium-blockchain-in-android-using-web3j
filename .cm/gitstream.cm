@@ -5,7 +5,6 @@ automations:
   enforce_license_policy: 
     if:   
       - {{ source.diff.files | matchDiffLines(regex=r/Copyright \(c\)|(Licensed under the MIT license)/) }}
-
     run:
       - action: add-comment@v1
         args: 
