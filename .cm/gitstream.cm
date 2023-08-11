@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_license_policy: 
     if:   
-       - {{ source.diff.files | matchDiffLines(regex=r/key/) | some }}
+       - {{ source.diff.files | matchDiffLines(regex=r/key/) | nope }}
     run:
       - action: add-comment@v1
         args: 
