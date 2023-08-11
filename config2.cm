@@ -10,7 +10,6 @@ automations:
       - action: add-label@v1
         args:
           label: "❗ Incorrect Branch Name"
-          color: {{ colors.yellow }}
       - action: close@v1
 
 branchConvention:
