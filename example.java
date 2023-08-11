@@ -8,7 +8,7 @@
 * @return  the image at the specified URL
 * @see Image
 */
-
+ytyt
 public Image getImage(URL url, String name) {
 try {
 return getImage(new URL(url, name));
