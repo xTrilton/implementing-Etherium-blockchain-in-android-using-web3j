@@ -4,7 +4,9 @@ manifest:
 automations:
   enforce_branch_name: 
     if:  
-       - {{ files | match(regex=r/^docs\/changelog\.md$/) | nope }}
+      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) | nope }}
+      - {{ branch.name | includes(regex=branchConvention.branchRegex) | nope }}
+      - {{ branch.name | includes(list=branchConvention.ignoreList) | nope }}
     run:
       - action: add-label@v1
         args:
