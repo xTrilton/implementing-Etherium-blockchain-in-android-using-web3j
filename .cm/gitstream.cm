@@ -2,22 +2,18 @@
 manifest:
   version: 1.0
 automations:
-  enforce_title_policy: 
-    if:   
-      - {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
-
-what is license header???
-      - {{ files | match(regex=r/\/src/) | every }}
-      - {{ source.diff.files | matchDiffLines(regex=r/Copyright/) | some }}
-
+  enforce_branch_name: 
+    if:       
+      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) | nope or branch.name | includes(regex=branchRegex") | nope }}
+      - {{ branch.name | includes(list=branchConvention.ignoreList) | nope }}
     run:
-      - action: add-comment@v1
-        args: 
-          comment: | 
-             All new files in the /src directory must include the required copyright header at the top of the file:
-             Here is the copyright header the automation should use as the example:
+      - action: add-label@v1
+        args:
+          label: "❗ Incorrect Branch Name"
+      - action: close@v1
 
-              //
-              // Copyright (c) ORG  and contributors. All rights reserved.
-              // Licensed under the MIT license. See LICENSE file in the project root for details.
-              //
+branchConvention:
+  requiredPrefixes: ['feature', 'stable', 'fix']
+  # This matches Jira ticket naming conventions, modify the regex to suit your project
+  branchRegex: /\b\w+-\w+\b/
+  ignoreList: [ 'development', 'staging' ]
