@@ -5,8 +5,8 @@ automations:
   enforce_license_policy: 
     if:   
       - {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
-      - {{ files | match(regex=r/\/src/) | some }}
-      - {{ source.diff.files | matchDiffLines(regex=r/\/\/ Copyright \(c\) .+?\. All rights reserved\.\n\/\/ Licensed under the MIT license/) | some }}
+      - {{ files | match(regex=r/src\//) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=r/\/\/ Copyright \(c\) .+?\. All rights reserved\.\n\/\/ Licensed under the MIT license/) | nope }}
 
     run:
       - action: add-comment@v1
