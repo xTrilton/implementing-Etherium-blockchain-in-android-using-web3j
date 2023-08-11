@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_license_policy: 
     if:   
-       - {{ source.diff.files | matchDiffLines(regex=r/\/\/ Copyright \(c\) .+?\. All rights reserved\.\n\/\/ Licensed under the MIT license/) | some }}
+       - {{ source.diff.files | matchDiffLines(regex=r/Licensed under the MIT license/) | some }}
     run:
       - action: add-comment@v1
         args: 
