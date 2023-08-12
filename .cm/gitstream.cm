@@ -2,14 +2,14 @@
 manifest:
   version: 1.0
 automations:
-  enforce_license_policy: 
-    if:   
-       - {{ source.diff.files | matchDiffLines(regex=r/Licensed under the MIT license/) | nope }}
+  enforce_branch_name: 
+    if:  
+      - {{ branch.name | match(regex=branchConvention.requiredPrefixes) | nope }}
     run:
-      - action: add-comment@v1
-        args: 
-          comment: | 
-             All new files in the '/src' directory must include the required copyright header at the top of the file. For example:
-              // Copyright (c) ORG  and contributors. All rights reserved.
-             // Licensed under the MIT license. See LICENSE file in the project root for details.
-             
+      - action: add-label@v1
+        args:
+          label: "❗ Incorrect Branch Name"
+      - action: close@v1
+
+branchConvention:
+  requiredPrefixes: r/^(feature|stable|fix)/
