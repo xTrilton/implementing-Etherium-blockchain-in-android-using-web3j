@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_title_policy: 
     if:       
-      - {{ pr.title | match(regex=titlePolicy.titleRegex) | nope }}
+      - {{ pr.title | includes(regex=titlePolicy.titleRegex) | nope }}
     run:
       - action: add-comment@v1
         args: 
