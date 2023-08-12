@@ -5,6 +5,8 @@ automations:
   enforce_branch_name: 
     if:  
       - {{ branch.name | match(regex=branchConvention.requiredPrefixes) | nope }}
+      - {{ branch.name | match(regex=branchConvention.branchRegex) | nope }}
+      - {{ branch.name | match(regex=branchConvention.ignoreList) | nope }}
     run:
       - action: add-label@v1
         args:
@@ -13,3 +15,5 @@ automations:
 
 branchConvention:
   requiredPrefixes: r/^(feature|stable|fix)/
+  branchRegex: r/\b\w+-\w+\b/
+  ignoreList: r/^(development|staging)/
