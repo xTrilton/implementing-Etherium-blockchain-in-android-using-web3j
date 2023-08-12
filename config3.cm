@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_title_policy: 
     if:       
-      - {{ pr.title | includes(regex=r/hello/) | nope}}
+      - {{ pr.title | match(regex=r/hello/) }}
     run:
       - action: add-comment@v1
         args: 
