@@ -1,4 +1,4 @@
-const myFunctionVar = function getNumber() {
+cfvcconst myFunctionVar = function getNumber() {
   console.log(typeof funName === 'function'); // => true
   return 42;
   dfsfd
