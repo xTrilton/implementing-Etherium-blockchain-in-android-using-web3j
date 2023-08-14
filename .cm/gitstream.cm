@@ -14,4 +14,4 @@ automations:
              // Licensed under the MIT license. See LICENSE file in the project root for details.
 
 licence:
-   licenceRegex: r/(Copyright \(c\) )|.( Licensed under the MIT license)/
+   licenceRegex: r/(Copyright \(c\) )|(Licensed under the MIT license)/
