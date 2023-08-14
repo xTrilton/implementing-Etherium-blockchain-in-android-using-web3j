@@ -12,21 +12,18 @@ automations:
       run:
         - action: add-label@v1
           args:
-            label: '{{ percent }}'
+            label: '{{ percent }}% {{ item.name }}'
    {% endfor %}
 
 labels:
   - name: Core
-    percent: {{ changes.ratio }}
     resources:
     - src/app
-  - name: mobile
-    percent: {{ changes.ratio }}
+  - name: mobile  
     resources:
     - src/android
     - src/ios   
   - name: docs
-    percent: {{ changes.ratio }}
     resources:
     - docs/
     - Readme.md
