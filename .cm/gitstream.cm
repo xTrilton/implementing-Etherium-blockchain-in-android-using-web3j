@@ -5,6 +5,9 @@ automations:
   enforce_license_policy: 
     if:   
       - {{ source.diff.files | matchDiffLines(regex=licence.licenceRegex) | nope }}
+      - {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
+      - {{ files | match(regex=r/\/src/) | every }}
+
     run:
       - action: add-comment@v1
         args: 
