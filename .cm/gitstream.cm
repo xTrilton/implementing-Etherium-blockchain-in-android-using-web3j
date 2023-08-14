@@ -6,7 +6,7 @@ manifest:
 
 automations:
   {% for item in labels %}
-  label_automations_{{ item.name }}:
+  label_percent_automations_{{ item.name }}:
       if:
          - {{ files | match(list=item.resources) }}
       run:
