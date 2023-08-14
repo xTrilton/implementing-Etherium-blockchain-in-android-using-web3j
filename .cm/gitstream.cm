@@ -3,13 +3,16 @@ manifest:
   version: 1.0
 
 automations:
-  label_automations:
+  {% for item in labels %}
+  label_automations_{{ item.name }}:
       if:
-        - true
+        - {{ files | match(list=item.resources) }}
       run:
         - action: add-label@v1
           args:
-            label: '{{ changes.ratio }}'
+            label: '{{ item.percent }}'
+   {% endfor %}
+
 labels:
   - name: Core
     percent: {{ changes.ratio }}
