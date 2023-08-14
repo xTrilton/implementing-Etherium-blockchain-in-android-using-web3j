@@ -9,7 +9,7 @@ automations:
       run:
         - action: add-label@v1
           args:
-            label: {{ changes.ratio }}
+            label: '{{ changes.ratio }}'
 labels:
   - name: Core
     percent: {{ changes.ratio }}
