@@ -2,22 +2,29 @@
 manifest:
   version: 1.0
 automations:
-  enforce_branch_name: 
-    if:  
-      - {{ branch.name | match(regex=branchConvention.requiredPrefixes) | nope }}
-      - {{ branch.name | match(regex=branchConvention.branchRegex) | nope }}
-      - {{ branch.name | match(regex=branchConvention.ignoreList) | nope }}
+  enforce_title_policy: 
+    if:       
+      - {{ pr.title | includes(regex=titlePolicy.titleRegex) | nope}}
     run:
-      - action: add-label@v1
-        args:
-          label: "❗ Incorrect Branch Name"
-          color: {{ colors.red }}
-      - action: close@v1
+      - action: add-comment@v1
+        args: 
+          comment: | 
+             All PRs must be titled according to our semantic naming policy: `<type>(<scope>): <short summary>`
 
-branchConvention:
-  requiredPrefixes: r/^(feature|stable|fix)/
-  branchRegex: r/\b\w+-\w+\b/
-  ignoreList: r/^(development|staging)/
+             Type must be one of the following:
 
-colors:
-  red: 'b60205'
+             * build
+             * ci 
+             * docs
+             * feature
+             * fix
+
+             Scope must be one of the following:
+
+             * common
+             * core
+             * elements
+             * forms
+             * http 
+titlePolicy:
+    titleRegex: r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/
