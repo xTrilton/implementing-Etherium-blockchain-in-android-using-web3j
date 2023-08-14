@@ -1,6 +1,6 @@
 jjklmconst myFunctionVar = function getNumber() {
   console.log(typeof funName === 'function'); // => true
-  return 42;
+  retdcsdurn 42;
   dfsfd
 }
 console.log(myFunctionVar());    // => 42
