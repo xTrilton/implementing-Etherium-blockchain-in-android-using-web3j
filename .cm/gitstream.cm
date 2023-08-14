@@ -1,37 +1,17 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-
-{% set percent = changes.ratio %}
-
 automations:
-  {% for item in labels %}
-  label_percent_automations_{{ item.name }}:
-      if:
-         - {{ files | match(list=item.resources) }}
-      run:
-        - action: add-label@v1
-          args:
-            label: '{{ percent }}% {{ item.name }}'
-   {% endfor %}
+  enforce_license_policy: 
+    if:   
+      - {{ source.diff.files | matchDiffLines(regex=licence.licenceRegex) | nope }}
+    run:
+      - action: add-comment@v1
+        args: 
+          comment: | 
+             All new files in the '/src' directory must include the required copyright header at the top of the file. For example:
+              // Copyright (c) ORG  and contributors. All rights reserved.
+             // Licensed under the MIT license. See LICENSE file in the project root for details.
 
-labels:
-  - name: Core
-    resources:
-    - src/app
-  - name: mobile  
-    resources:
-    - src/android
-    - src/ios   
-  - name: docs
-    resources:
-    - docs/
-    - Readme.md
-    
-changes:
-  # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
-  # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
-  # Calculate the ratio of new code
-  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
+licence:
+   licenceRegex: r/\/\/ Copyright \(c\) .+?\. All rights reserved\.\n\/\/ Licensed under the MIT license\. See LICENSE file in the project root for details/
