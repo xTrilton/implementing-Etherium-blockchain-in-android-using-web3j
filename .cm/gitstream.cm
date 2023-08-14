@@ -2,6 +2,8 @@
 manifest:
   version: 1.0
 
+{% set percent = changes.ratio %}
+
 automations:
   {% for item in labels %}
   label_automations_{{ item.name }}:
@@ -10,7 +12,7 @@ automations:
       run:
         - action: add-label@v1
           args:
-            label: '{{ item.percent }}'
+            label: '{{ percent }}'
    {% endfor %}
 
 labels:
