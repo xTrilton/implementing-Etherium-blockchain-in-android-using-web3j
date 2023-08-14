@@ -6,7 +6,7 @@ automations:
   {% for item in labels %}
   label_automations_{{ item.name }}:
       if:
-        - {{ files | match(list=item.resources) }}
+        - true
       run:
         - action: add-label@v1
           args:
