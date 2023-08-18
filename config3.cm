@@ -2,29 +2,18 @@
 manifest:
   version: 1.0
 automations:
-  enforce_title_policy: 
+ {% for item in branches %}
+  require_additional_reviewers_branch_{item.prefix}: 
     if:       
-      - {{ pr.title == 'any' }}
+      - {{ branch.name | match(regex=item.prefix) | some }}
     run:
       - action: add-comment@v1
         args: 
           comment: | 
-             All PRs must be titled according to our semantic naming policy: `<type>(<scope>): <short summary>`
-
-             Type must be one of the following:
-
-             * build
-             * ci 
-             * docs
-             * feature
-             * fix
-
-             Scope must be one of the following:
-
-             * common
-             * core
-             * elements
-             * forms
-             * http 
-titlePolicy:
-    titleRegex: r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/
+             This PR requires {{ item.requiredReviews }} reviews.
+{% endfor %}
+branches:
+    - prefix: r/ABC/
+        requiredReviews: 2
+    - prefix: XYZ
+        requiredReviewers: 4
