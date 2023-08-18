@@ -10,10 +10,12 @@ automations:
       - action: add-reviewers@v1
         args:
           reviewers: [fourth-organization/tech-writers] // edit this
-
-      - action: close@v1
-
+      - action: add-comment@v1
+        args: 
+          comment: | 
+             This PR requires {{ item.requiredReviews }} reviewers.
 {% endfor %}
+
 teams:
     - name: ui-team
         requiredReviews: 2
