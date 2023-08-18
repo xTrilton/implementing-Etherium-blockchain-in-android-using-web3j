@@ -2,14 +2,18 @@
 manifest:
   version: 1.0
 automations:
-  label_requested_chnages:  
-    if:  
-       - {{ pr.unresolved_threads > 0 }}
+ {% for item in branches %}
+  require_additional_reviewers_branch_{item.prefix}: 
+    if:       
+      - {{ pr.target| match(regex=item.prefix) | some }}
     run:
-     - action: add-label@v1
-        args:
-          label: "🔁 Changes Requested"
-          color: {{ colors.yellow }}
-      
-colors:
-  yellow: 'fbca04'
+      - action: add-comment@v1
+        args: 
+          comment: | 
+             This PR requires {{ item.requiredReviews }} reviews.
+{% endfor %}
+branches:
+    - prefix: r/ABC/
+        requiredReviews: 2
+    - prefix: XYZ
+        requiredReviewers: 4
