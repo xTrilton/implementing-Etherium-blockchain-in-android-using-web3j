@@ -1,30 +1,39 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
+
+{% set deletions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='deletions') | sum }} %}
+{% set additions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }} %}
+{% set ratio = {{ (additions / (additions + deletions)) * 100 }} %}
+{% set percent = ratio %}
+
 automations:
-  enforce_title_policy: 
-    if:       
-      - {{ pr.title | match(regex=titlePolicy.titleRegex) | nope }}
-    run:
-      - action: add-comment@v1
-        args: 
-          comment: | 
-             All PRs must be titled according to our semantic naming policy: `<type>(<scope>): <short summary>`
+  {% for item in labels %}
+  label_automations_{{ item.name }}:
+      if:
+         - {{ files | match(list=item.resources) }}
+      run:
+        - action: add-label@v1
+          args:
+            label: '{{ percent }}% {{ item.name }}'
+   {% endfor %}
 
-             Type must be one of the following:
-
-             * build
-             * ci 
-             * docs
-             * feature
-             * fix
-
-             Scope must be one of the following:
-
-             * common
-             * core
-             * elements
-             * forms
-             * http 
-titlePolicy:
-    titleRegex: r/\b(build|ci|docs|feature|fix|)\b\s*(common|core|elements|forms|http):\s*\w+/
+labels:
+  - name: Core
+    resources:
+    - src/app
+  - name: mobile  
+    resources:
+    - src/android
+    - src/ios   
+  - name: docs
+    resources:
+    - docs/Readme.md
+    
+changes:
+  # Sum all the lines added/edited in the PR
+  additions: {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }}
+  # Sum all the line removed in the PR
+  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
+  # Calculate the ratio of new code
+  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
