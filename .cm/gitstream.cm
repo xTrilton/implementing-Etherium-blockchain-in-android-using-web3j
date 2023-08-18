@@ -2,7 +2,10 @@
 manifest:
   version: 1.0
 
-{% set percent = changes.ratio %}
+{% set deletions = branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='deletions') | sum %}
+{% set additions = branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum %}
+{% set ratio = (additions / (additions + deletions)) * 100 | round(2)  %}
+{% set percent = ratio %}
 
 automations:
   {% for item in labels %}
