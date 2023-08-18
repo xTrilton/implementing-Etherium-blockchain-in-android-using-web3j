@@ -35,8 +35,8 @@ resource_path:
     
 changes:
   # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | filter(attr='file', list=resource_path ) | map(attr='additions') | sum }}
+  additions: {{ branch.diff.files_metadata | filter(attr='file', list=[ 'src/android', 'src/ios', 'src/app' ] ) | map(attr='additions') | sum }}
   # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | filter(attr='file', list=resource_path ) | map(attr='deletions') | sum }}
+  deletions: {{ branch.diff.files_metadata | filter(attr='file', list=[ 'src/android', 'src/ios', 'src/app' ] ) | map(attr='deletions') | sum }}
   # Calculate the ratio of new code
   ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
