@@ -2,10 +2,7 @@
 manifest:
   version: 1.0
 
-{% set deletions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='deletions') | sum }} %}
-{% set additions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }} %}
-{% set ratio = {{ (additions / (additions + deletions)) * 100 }} %}
-{% set percent = ratio %}
+{% set percent = changes.ratio %}
 
 automations:
   {% for item in labels %}
@@ -34,6 +31,6 @@ changes:
   # Sum all the lines added/edited in the PR
   additions: {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }}
   # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
+  deletions: {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='deletions') | sum }}
   # Calculate the ratio of new code
   ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
