@@ -1,9 +1,10 @@
 /**
  * @return {PromiseLike<string>}
+ nkjkj
  */
+mnjnk
 function ps() {}
- 
 /**
- * @returns {{ a: string, b: number }} - May use '@returns' as well as '@return'
+ * @returns {{ a:pp]] string, b: number }} - May use '@returns' as well as '@return'
  */
 function ab() {}
