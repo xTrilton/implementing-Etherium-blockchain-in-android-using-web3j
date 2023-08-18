@@ -4,7 +4,7 @@ manifest:
 
 {% set deletions = branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='deletions') | sum %}
 {% set additions = branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum %}
-{% set ratio = (additions / (additions + deletions)) * 100 | round(2)  %}
+{% set ratio = (additions / (additions + deletions)) * 100 | round(2) %}
 {% set percent = ratio %}
 
 automations:
