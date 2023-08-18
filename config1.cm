@@ -2,36 +2,37 @@
 manifest:
   version: 1.0
 
+{% set deletions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='deletions') | sum }} %}
+{% set additions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }} %}
+{% set ratio = {{ (additions / (additions + deletions)) * 100 }} %}
+{% set percent = ratio %}
+
 automations:
   {% for item in labels %}
   label_automations_{{ item.name }}:
       if:
-        - {{ files | match(list=item.resources) }}
+         - {{ files | match(list=item.resources) }}
       run:
         - action: add-label@v1
           args:
-            label: {{ item.percent }}
+            label: '{{ percent }}% {{ item.name }}'
    {% endfor %}
 
 labels:
   - name: Core
-    percent: {{ changes.ratio }}
     resources:
     - src/app
-  - name: mobile
-    percent: {{ changes.ratio }}
+  - name: mobile  
     resources:
     - src/android
     - src/ios   
   - name: docs
-    percent: {{ changes.ratio }}
     resources:
-    - docs/
-    - Readme.md
+    - docs/Readme.md
     
 changes:
   # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
+  additions: {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }}
   # Sum all the line removed in the PR
   deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
   # Calculate the ratio of new code
