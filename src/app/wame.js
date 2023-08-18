@@ -1,9 +1,8 @@
+* @return {PromiseLi<string>}
+ */function ps() {}
+new line
+new line
 /**
- * @return {PromiseLike<string>}
+ * @returns {{ a: string, b: numbe- May use '@returns' as well as '@return'
  */
-function ps() {}
- 
-/**
- * @returns {{ a: string, b: number }} - May use '@returns' as well as '@return'
- */
-function ab() {}
+functi ab() {}
