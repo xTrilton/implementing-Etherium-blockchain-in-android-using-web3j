@@ -2,19 +2,20 @@
 manifest:
   version: 1.0
 automations:
-  enforce_branch_name: 
+ {% for item in teams %}
+ enforce_branch_name_{item.name}: 
     if:  
-      - {{ branch.name | includes(list=branchConvention.requiredPrefixes) | nope }}
-      - {{ branch.name | includes(regex=branchConvention.branchRegex) | nope }}
-      - {{ branch.name | includes(list=branchConvention.ignoreList) | nope }}
+      - {{ pr.author_teams | matches(list=item.name) | some }}
     run:
-      - action: add-label@v1
+      - action: add-reviewers@v1
         args:
-          label: "❗ Incorrect Branch Name"
+          reviewers: [fourth-organization/tech-writers] // edit this
+
       - action: close@v1
 
-branchConvention:
-  requiredPrefixes: ['feature', 'stable', 'fix']
-  # This matches Jira ticket naming conventions, modify the regex to suit your project
-  branchRegex: /\b\w+-\w+\b/
-  ignoreList: [ 'development', 'staging' ]
+{% endfor %}
+teams:
+    - name: ui-team
+        requiredReviews: 2
+    - name: mobile-team
+        requiredReviewers: 4
