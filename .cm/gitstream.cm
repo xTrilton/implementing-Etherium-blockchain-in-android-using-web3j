@@ -12,6 +12,7 @@ automations:
           comment: | 
              This PR requires {{ item.requiredReviews }} reviews.
 {% endfor %}
+
 branches:
     - prefix: r/^ABC/
       requiredReviews: 2
