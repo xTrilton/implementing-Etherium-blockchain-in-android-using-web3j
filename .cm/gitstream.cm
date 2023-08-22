@@ -1,37 +1,19 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-
-{% set percent = changes.ratio %}
-
 automations:
-  {% for item in labels %}
-  label_automations_{{ item.name }}:
-      if:
-         - {{ files | match(list=item.resources) }}
-         - percent > 0
-      run:
-        - action: add-label@v1
-          args:
-            label: '{{ percent }}% {{ item.name }}'
-   {% endfor %}
-
-labels:
-  - name: Core
-    resources:
-    - src/app
-  - name: mobile  
-    resources:
-    - src/android
-    - src/ios   
-  - name: docs
-    resources:
-    - docs/Readme.md
-    
-changes:
-  # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | filter(attr='file', list=[ 'src/android', 'src/ios', 'src/app', 'docs/Readme.md' ] ) | map(attr='additions') | sum }}
-  # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | filter(attr='file', list=[ 'src/android', 'src/ios', 'src/app', 'docs/Readme.md' ] ) | map(attr='deletions') | sum }}
-  # Calculate the ratio of new code
-  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
+ {% for item in branches %}
+  require_additional_reviewers_branch_{item.prefix}: 
+    if:       
+      - {{ branch.name | includes(regex=item.prefix) }}
+    run:
+      - action: add-comment@v1
+        args: 
+          comment: | 
+             This PR requires {{ item.requiredReviews }} reviews.
+{% endfor %}
+branches:
+    - prefix: r/^ABC/
+        requiredReviews: 2
+    - prefix: r/^XYZ/
+        requiredReviewers: 4
