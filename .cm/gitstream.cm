@@ -3,9 +3,9 @@ manifest:
   version: 1.0
 automations:
  {% for item in branches %}
-  require_additional_reviewers_branch_{item.prefix}: 
+  require_reviewers_{item.prefix}: 
     if:       
-      - {{ branch.name | includes(regex=item.prefix) }}
+      - {{ branch.name | includes(term=item.prefix) }}
     run:
       - action: add-comment@v1
         args: 
@@ -14,7 +14,7 @@ automations:
 {% endfor %}
 
 branches:
-    - prefix: r/^ABC/
+    - prefix: ABC
       requiredReviews: 2
-    - prefix: r/^XYZ/
+    - prefix: XYZ
       requiredReviewers: 4
