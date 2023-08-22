@@ -14,6 +14,6 @@ automations:
 {% endfor %}
 branches:
     - prefix: r/^ABC/
-        requiredReviews: 2
+      requiredReviews: 2
     - prefix: r/^XYZ/
-        requiredReviewers: 4
+      requiredReviewers: 4
