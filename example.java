@@ -1,4 +1,5 @@
-/**
+gfhbf
+  /**
 * This method always returns immediately, whether or not the 
 * image exists. When this applet attempts to draw the image on
 * the screen, the data will be loaded. The graphics primitives 
