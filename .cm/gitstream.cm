@@ -2,19 +2,19 @@
 manifest:
   version: 1.0
 automations:
- {% for item in branches %}
-  require_reviewers_{item.prefix}: 
+  {% for item in branches %}
+  require_additional_reviewers_branch_{{ item.branchPrefix }}: 
     if:       
-      - {{ branch.name | includes(term=item.prefix) }}
+     - {{ pr.target | match(regex=item.branchPrefix) }}
     run:
       - action: add-comment@v1
         args: 
           comment: | 
-             This PR requires {{ item.requiredReviews }} reviews.
-{% endfor %}
+             This PR requires {{ item.requiredReviewers }} reviews.
+  {% endfor %}
 
 branches:
-    - prefix: ABC
-      requiredReviews: 2
-    - prefix: XYZ
+    - branchPrefix: r/ABC.*/ 
+      requiredReviewers: 2
+    - branchPrefix: r/XYZ.*/
       requiredReviewers: 4
