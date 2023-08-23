@@ -15,6 +15,6 @@ automations:
 
 branches:
     - branchPrefix: r/ABC.*/ 
-      requiredReviews: 2
+      requiredReviewers: 2
     - branchPrefix: r/XYZ.*/
       requiredReviewers: 4
