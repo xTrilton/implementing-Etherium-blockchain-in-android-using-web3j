@@ -3,20 +3,18 @@ manifest:
   version: 1.0
 automations:
   {% for item in branches %}
-  require_reviewers_{{ item.branchPrefix }}: 
+  require_additional_reviewers_branch_{{ item.branchPrefix }}: 
     if:       
-     - {{ branch.name | match(regex=item.branchPrefixs) }}
+     - {{ branch.name | match(regex=item.branchPrefix) }}
     run:
       - action: add-comment@v1
         args: 
           comment: | 
-             This PR requires {{ item.requiredReviews }} reviews.
+             This PR requires {{ item.requiredReviewers }} reviews.
   {% endfor %}
 
 branches:
-    - branchPrefix: r/ABC.*/
-      branchPrefixs: r/ABC.*/ 
+    - branchPrefix: r/ABC.*/ 
       requiredReviews: 2
     - branchPrefix: r/XYZ.*/
-      branchPrefixs: r/XYZ.*/
       requiredReviewers: 4
