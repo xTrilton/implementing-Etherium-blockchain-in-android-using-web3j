@@ -2,7 +2,7 @@
 manifest:
   version: 1.0
 automations:
- {% for item in branches %}
+  {% for item in branches %}
   require_additional_reviewers_branch_{item.prefix}: 
     if:       
       - {{ pr.target| match(regex=item.prefix) }}
@@ -11,7 +11,7 @@ automations:
         args: 
           comment: | 
              This PR requires {{ item.requiredReviews }} reviews.
-{% endfor %}
+  {% endfor %}
 
 branches:
     - prefix: r/ABC/
