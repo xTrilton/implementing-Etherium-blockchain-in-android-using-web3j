@@ -2,25 +2,19 @@
 manifest:
   version: 1.0
 automations:
-  enforce_branch_name: 
-    if:  
-      - {{ branch.name | match(regex=branchConvention.requiredPrefixes) | nope }}
-      - {{ branch.name | match(regex=branchConvention.branchRegex) | nope }}
-      - {{ branch.name | match(regex=branchConvention.ignoreList) | nope }}
+ {% for item in branches %}
+  require_reviewers_{item.branchPrefix}: 
+    if:       
+     - {{ branch.name | match(regex=item.branchPrefix) }}
     run:
-      - action: add-label@v1
-        args:
-          label: "❗ Incorrect Branch Name"
-          color: {{ colors.red }}
-      - action: close@v1
+      - action: add-comment@v1
+        args: 
+          comment: | 
+             This PR requires {{ item.requiredReviews }} reviews.
+{% endfor %}
 
-branchConvention:
-  requiredPrefixes: r/^(feature|stable|fix)/
-
-  # This matches Jira ticket naming conventions, modify the regex to suit your project
-  branchRegex: '\b[A-Za-z]+-\d+\b'
-
-  ignoreList: r/^(development|staging)/
-
-colors:
-  red: 'b60205'
+branches:
+    - branchPrefix: r/ABC.*/
+      requiredReviews: 2
+    - branchPrefix: r/XYZ.*/
+      requiredReviewers: 4
