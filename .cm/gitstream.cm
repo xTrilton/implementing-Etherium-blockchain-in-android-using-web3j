@@ -5,7 +5,7 @@ automations:
   {% for item in branches %}
   require_additional_reviewers_branch_{item.prefix}: 
     if:       
-      - {{ pr.target| match(regex=item.prefix) }}
+      - {{ pr.target| includes(term='XYZ') }}
     run:
       - action: add-comment@v1
         args: 
@@ -14,7 +14,7 @@ automations:
   {% endfor %}
 
 branches:
-    - prefix: r/ABC/
-      requiredReviews: 2
-    - prefix: r/XYZ/
-      requiredReviewers: 4
+  - prefix: r/ABC/
+    requiredReviews: 2
+  - prefix: r/XYZ/
+    requiredReviewers: 4
