@@ -5,7 +5,7 @@ automations:
   {% for item in branches %}
   require_additional_reviewers_branch_{{ item.branchPrefix }}: 
     if:       
-     - {{ branch.name | match(regex=item.branchPrefix) }}
+     - {{ pr.target | match(regex=item.branchPrefix) }}
     run:
       - action: add-comment@v1
         args: 
