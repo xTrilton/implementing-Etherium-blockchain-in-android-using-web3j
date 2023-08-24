@@ -7,6 +7,9 @@ automations:
     if:       
      - {{ branch.name | match(regex=item.branchPrefix) }}
     run:
+      - action: set-required-approvals@v1
+        args:
+          approvals: {{ item.requiredReviewers }}
       - action: add-comment@v1
         args: 
           comment: | 
