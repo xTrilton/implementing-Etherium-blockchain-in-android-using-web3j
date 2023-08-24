@@ -7,6 +7,9 @@ automations:
     if:       
      - {{ pr.target | match(regex=item.branchPrefix) }}
     run:
+      - action: set-required-approvals@v1
+        args:
+          approvals: {{ item.requiredReviewers }}
       - action: add-comment@v1
         args: 
           comment: | 
@@ -17,4 +20,4 @@ branches:
     - branchPrefix: r/ABC.*/ 
       requiredReviewers: 2
     - branchPrefix: r/XYZ.*/
-      requiredReviewers: 4
+      requiredReviewers: 1
