@@ -20,5 +20,5 @@ branches:
     - branchPrefix: r/ABC.*/ 
       requiredReviewers: 2
     - branchPrefix: r/XYZ.*/
-      requiredReviewers: 4
+      requiredReviewers: 1
 
