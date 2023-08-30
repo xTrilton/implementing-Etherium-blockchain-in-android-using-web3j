@@ -1,39 +1,29 @@
 # -*- mode: yaml -*-
 manifest:
   version: 1.0
-
-{% set deletions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='deletions') | sum }} %}
-{% set additions = {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }} %}
-{% set ratio = {{ (additions / (additions + deletions)) * 100 }} %}
-{% set percent = ratio %}
-
 automations:
-  {% for item in labels %}
-  label_automations_{{ item.name }}:
-      if:
-         - {{ files | match(list=item.resources) }}
-      run:
-        - action: add-label@v1
-          args:
-            label: '{{ percent }}% {{ item.name }}'
-   {% endfor %}
+  #Require more extensive reviews for large Golang changes that lack godoc updates.
+  review_godoc_large:
+    if:
+      - {{ changes.percentage > 25}}
+      - {{ source.diff.files | matchDiffLines(regex=r/\/*\*([\s\S]*?)\//) | nope }}
+    run: 
+      - action: add-label@v1
+        args:
+          label: "⚠️ Missing godoc Label"
+          color: {{ colors.yellow }}
+      - action: add-comment@v1
+        args: 
+          comment: | 
+            This PR makes major changes to Goalng classes, but is missing updates to godoc. Please double check for any necessary godoc updates.
 
-labels:
-  - name: Core
-    resources:
-    - src/app
-  - name: mobile  
-    resources:
-    - src/android
-    - src/ios   
-  - name: docs
-    resources:
-    - docs/Readme.md
-    
+      - action: add-reviewers@v1
+        args:
+          reviewers: [fourth-organization/tech-writers]
+
 changes:
-  # Sum all the lines added/edited in the PR
-  additions: {{ branch.diff.files_metadata | filter(attr='file', list=item.resources ) | map(attr='additions') | sum }}
-  # Sum all the line removed in the PR
-  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
-  # Calculate the ratio of new code
-  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
+    additions: {{ branch.diff.files_metadata | filter(attr='file', list=resources.core ) | map(attr='additions') | sum / total.additions * 100 }}
+    percentage: {{ changes.additions | round }}
+
+colors:
+  yellow: 'fbca04'
