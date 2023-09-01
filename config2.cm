@@ -2,22 +2,24 @@
 manifest:
   version: 1.0
 automations:
- {% for item in teams %}
- enforce_branch_name_{item.name}: 
+  review_new_class: 
     if:  
-      - {{ pr.author_teams | matches(list=item.name) | some }}
+       - {{ is.ruby and is.new }} 
+       - {{ source.diff.files | matchDiffLines(regex=r/^=begin([\s\S]*?)=end/) | nope }}
     run:
-      - action: add-reviewers@v1
+      - action: add-label@v1
         args:
-          reviewers: [fourth-organization/tech-writers] // edit this
+          label: "⚠️ Missing rdoc"
+          color: {{ colors.yellow }}
       - action: add-comment@v1
         args: 
           comment: | 
-             This PR requires {{ item.requiredReviews }} reviewers.
-{% endfor %}
+            JSDoc is required for all Java classes. Please add JSDoc to all new classes in this PR.
 
-teams:
-    - name: ui-team
-        requiredReviews: 2
-    - name: mobile-team
-        requiredReviewers: 4
+is:
+    ruby: {{ files | extensions | match(regex=r/rb/) | every }}
+    new: {{ source.diff.files | map(attr='original_file') | match(regex=r/^$/) | some }}
+
+colors:
+  yellow: 'fbca04'
+
