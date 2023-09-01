@@ -1,0 +1,29 @@
+# -*- mode: yaml -*-
+manifest:
+  version: 1.0
+automations:
+  #Require more extensive reviews for large Golang changes that lack godoc updates.
+  review_godoc_large:
+    if:
+      - {{ changes.percentage > 25}}
+      - {{ source.diff.files | matchDiffLines(regex=r/^=begin([\s\S]*?)=end/) | nope }}
+    run: 
+      - action: add-label@v1
+        args:
+          label: "⚠️ Missing godoc Label"
+          color: {{ colors.yellow }}
+      - action: add-comment@v1
+        args: 
+          comment: | 
+            This PR makes major changes to Goalng classes, but is missing updates to godoc. Please double check for any necessary godoc updates.
+
+      - action: add-reviewers@v1
+        args:
+          reviewers: [fourth-organization/tech-writers]
+
+changes:
+    additions: {{ branch.diff.files_metadata | filter(attr='file', regex=r/\S+/ ) | map(attr='additions') | sum / total.additions * 100 }}
+    percentage: {{ changes.additions | round }}
+
+colors:
+  yellow: 'fbca04'
