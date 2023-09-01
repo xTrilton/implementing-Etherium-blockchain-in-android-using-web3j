@@ -22,7 +22,7 @@ automations:
           reviewers: [fourth-organization/tech-writers]
 
 changes:
-    additions: {{ branch.diff.files_metadata | filter(attr='file', list=resources.core ) | map(attr='additions') | sum / total.additions * 100 }}
+    additions: {{ branch.diff.files_metadata | filter(attr='file', regex=r/\S+/ ) | map(attr='additions') | sum / total.additions * 100 }}
     percentage: {{ changes.additions | round }}
 
 colors:
