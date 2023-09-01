@@ -14,7 +14,7 @@ automations:
       - action: add-comment@v1
         args: 
           comment: | 
-            JSDoc is required for all Java classes. Please add JSDoc to all new classes in this PR.
+            rdoc is required for all Ruby classes. Please add rdoc to all new classes in this PR.
 
 is:
     ruby: {{ files | extensions | match(regex=r/rb/) | every }}
