@@ -2,18 +2,20 @@
 manifest:
   version: 1.0
 automations:
- {% for item in branches %}
-  require_additional_reviewers_branch_{item.prefix}: 
-    if:       
-      - {{ pr.target| match(regex=item.prefix) | some }}
+  #Assign PRs that only affect rdocs to the technical writing team and add docs label
+  review_jsdoc:
+    if:
+      - {{ source.diff.files | matchDiffLines(regex=r/^=begin([\s\S]*?)=end/) | every }}
     run:
-      - action: add-comment@v1
-        args: 
-          comment: | 
-             This PR requires {{ item.requiredReviews }} reviews.
-{% endfor %}
-branches:
-    - prefix: r/ABC/
-        requiredReviews: 2
-    - prefix: XYZ
-        requiredReviewers: 4
+      - action: add-label@v1
+        args:
+            label: "📓rdocJSDoc Only"
+            color: {{ colors.green }}
+      - action: add-reviewers@v1
+        args:
+          reviewers: [fourth-organization/tech-writers]
+      - action: approve@v1
+      
+colors:
+  green: '0e8a16'#
+
