@@ -16,3 +16,4 @@ return getImage(new URL(url, name));
 return null;
 }
 }
+logger.trace("Trace log message");
