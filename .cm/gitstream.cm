@@ -4,11 +4,11 @@ manifest:
   version: 1.0
 
 automations:
-  approve_java_log_output:
-    # Triggered for Java changes that only affect the logger method
+  approve_ruby_log_output:
+    # Triggered for Ruby changes that only affect the logger method
     if: 
-      - {{ files | match(regex=r/java/) | every }}
-      - {{ source.diff.files | matchDiffLines(regex=r/^.*logger\.(trace|fatal|debug|info|warn|error)/, ignoreWhiteSpaces=true) | every }}
+      - {{ files | match(regex=r/rb/) | every }}
+      - {{ source.diff.files | matchDiffLines(regex=r/^.*logger\.(fatal|debug|info|warn|error)/, ignoreWhiteSpaces=true) | every }}
     run: 
       - action: add-label@v1
         args:
