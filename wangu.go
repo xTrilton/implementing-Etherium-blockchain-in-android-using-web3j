@@ -1,1 +1,1 @@
-logger.Println("This is an info message.")
+vsdgflogger.Println("This is an info message.")
