@@ -11,7 +11,7 @@ automations:
       - action: add-comment@v1
         args:
           comment: |            
-          file name: {{ is.mainfile }}
+             name: {{ is.mainfile }}
     
 is:
   mainfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
