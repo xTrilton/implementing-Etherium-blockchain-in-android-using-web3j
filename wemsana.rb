@@ -1,1 +1,1 @@
-logger.info("Trace log message");
+rrferf logger.info("Trace log message");
