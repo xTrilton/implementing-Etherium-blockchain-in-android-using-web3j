@@ -6,7 +6,7 @@ manifest:
 automations:
   review_new_terraform_module:
     if: 
-      - {{ files | extensions | match(term=is.bainfile) | every }}
+      - {{ files | extensions | match(term= {{ is.bainfile }}) | every }}
     run:
       - action: add-comment@v1
         args:
