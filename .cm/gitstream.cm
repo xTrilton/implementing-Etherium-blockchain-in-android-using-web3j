@@ -6,13 +6,13 @@ manifest:
 automations:
   review_new_terraform_module:
     if: 
-      - {{ files | extensions | match(term=is.bainfile) | every }}
+      - {{ files | extensions | match(term='ja' + testfile) | every }}
     run:
       - action: add-comment@v1
         args:
           comment: |            
              name: {{ is.mainfile }}
     
+testfile: va
 is:
-  - bainfile: java
   - mainfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
