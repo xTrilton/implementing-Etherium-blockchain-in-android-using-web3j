@@ -14,5 +14,5 @@ automations:
              name: {{ is.mainfile }}
     
 is:
-  bainfile: java
-  mainfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
+  - bainfile: java
+  - mainfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
