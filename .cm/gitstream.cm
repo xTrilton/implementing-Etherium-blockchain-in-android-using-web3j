@@ -15,4 +15,4 @@ automations:
           file name: {{ is.mainfile }}
     
 is:
-  mainfile: {{ branch.diff.files_metadata | map(attr='file')}}
+  mainfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
