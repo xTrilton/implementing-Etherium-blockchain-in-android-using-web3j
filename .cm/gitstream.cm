@@ -6,11 +6,11 @@ manifest:
 automations:
   review_new_terraform_module:
     if: 
-       - {{ branch.diff.files_metadata | match(attr='file', term='Test' + testfile) | some }}      
+       - true   
     run:
       - action: add-comment@v1
         args:
           comment: |            
-             name: hey there bro
+             name: file name is {{ testfile }}
     
 testfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
