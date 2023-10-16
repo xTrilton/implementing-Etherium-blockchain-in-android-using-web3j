@@ -4,13 +4,17 @@ manifest:
   version: 1.0
 
 automations:
-  review_new_terraform_module:
+  {% for item in filenames %}
+  review_name_{{ item.name }}:
     if: 
        - true   
     run:
       - action: add-comment@v1
         args:
           comment: |            
-             name: file name is {{ testfile }}
+             name: file name is {{ item.testfile }}
+  {% endfor %}
     
-testfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
+filenames:
+  - name: testfiles
+    testfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
