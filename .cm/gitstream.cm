@@ -7,7 +7,7 @@ automations:
   {% for item in filenames %}
   review_name_{{ item.name }}:
     if: 
-       - {{ files | match(regex=r/src\/app\/auth\/.*/) | some}}
+       - {{ files | match(regex=r/src\/main\/test\/.*/) | some}}
        - {{ files | extensions | match(term='java') | every }}
        - {{ branch.diff.files_metadata | match(attr='file', regex=/Test\b(?=[.])/) | some }} 
  
