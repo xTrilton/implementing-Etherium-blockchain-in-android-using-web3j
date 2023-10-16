@@ -9,6 +9,7 @@ automations:
     if: 
        - {{ files | match(regex=r/src\/app\/auth\/.*/) | some}}
        - {{ files | extensions | match(term='java') | every }}
+       - {{ branch.diff.files_metadata | match(attr='file', regex=/Test\b(?=[.])/) | some }} 
  
     run:
       - action: add-comment@v1
