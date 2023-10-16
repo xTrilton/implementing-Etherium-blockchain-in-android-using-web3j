@@ -7,7 +7,9 @@ automations:
   {% for item in filenames %}
   review_name_{{ item.name }}:
     if: 
-       - true   
+       - {{ files | match(regex=r/src\/app\/auth\/.*/) | some}}
+       - {{ files | extensions | match(term='java') | every }}
+ 
     run:
       - action: add-comment@v1
         args:
