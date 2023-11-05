@@ -5,7 +5,7 @@ automations:
   flag_duplicate_h1:
     if:
       - {{ files | extensions | match(term='html') | every }}
-      - {{ source.diff.files | matchDiffLines(regex=r/<\/h1>[\s\S]*?h1/) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=r/<\/h1>[\s\S]*?<\/h1>/) | some }}
     run: 
       - action: request-changes@v1
         args:
