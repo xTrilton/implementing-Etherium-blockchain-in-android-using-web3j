@@ -1,23 +1,13 @@
-# -*- mode: yaml -*-
-
 manifest:
   version: 1.0
 
 automations:
-  {% for item in filenames %}
-  review_name_{{ item.name }}:
-    if: 
-       - {{ files | match(regex=r/src\/main\/test\/.*/) | some}}
-       - {{ files | extensions | match(term='java') | every }}
-       - {{ branch.diff.files_metadata | match(attr='file', regex=/Test\b(?=[.])/) | some }} 
- 
-    run:
-      - action: add-comment@v1
+  flag_duplicate_h1:
+    if:
+      - {{ files | extensions | match(term='html') | every }}
+      - {{ source.diff.files | matchDiffLines(regex=r/<\/h1>[\s\S]*?h1/) | some }}
+    run: 
+      - action: request-changes@v1
         args:
-          comment: |            
-             name: file name is {{ item.testfile }}
-  {% endfor %}
-    
-filenames:
-  - name: testfiles
-    testfile: {{ branch.diff.files_metadata | map(attr='new_file')}}
+          comment: | 
+              The file being modified has a duplicate H1 heading. Please create only one H1 for the main heading. Creating one H1 Heading creates a meaningful structure and makes it easy for indexing search engines.
