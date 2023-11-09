@@ -18,4 +18,5 @@ automations:
           comment: | 
                  Some of the images you added do not have an alt attribute. Please add alt attributes to images to add more context to the image.
 
-yellow: 'fbca04'
+colors:
+  yellow: 'fbca04'
