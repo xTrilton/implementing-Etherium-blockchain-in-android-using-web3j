@@ -2,12 +2,19 @@ manifest:
   version: 1.0
 
 automations:
-  flag_duplicate_h1:
+  enforce_image_alt:
     if:
       - {{ files | extensions | match(term='html') | every }}
-      - {{ source.diff.files | matchDiffLines(regex=r/<\/h1>[\s\S]*?<\/h1>/) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=r/<img src/) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=r/<img src.*alt=/) | nope}}
     run: 
+      - action: add-label@v1
+        args:
+          label: "⚠️ Missing alt label"
+          color: {{ colors.yellow }}
       - action: request-changes@v1
         args:
           comment: | 
-              The file being modified has a duplicate H1 heading. Please create only one H1 for the main heading. Creating one H1 Heading creates a meaningful structure and makes it easy for indexing search engines.
+                 Some of the images you added do not have an alt attribute. Please add alt attributes to images to add more context to the image.
+
+  yellow: 'fbca04'
