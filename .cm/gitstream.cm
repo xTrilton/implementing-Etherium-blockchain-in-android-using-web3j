@@ -7,6 +7,7 @@ automations:
       - {{ files | extensions | match(term='html') | every }}
       - {{ source.diff.files | matchDiffLines(regex=r/<img src/) | some }}
       - {{ source.diff.files | matchDiffLines(regex=r/<img src.*alt=/) | nope}}
+
     run: 
       - action: add-label@v1
         args:
@@ -17,4 +18,4 @@ automations:
           comment: | 
                  Some of the images you added do not have an alt attribute. Please add alt attributes to images to add more context to the image.
 
-  yellow: 'fbca04'
+yellow: 'fbca04'
