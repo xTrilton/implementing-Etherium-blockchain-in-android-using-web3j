@@ -1,22 +1,13 @@
+# -*- mode: yaml -*-
 manifest:
   version: 1.0
-
 automations:
-  enforce_image_alt:
-    if:
-      - {{ files | extensions | match(term='html') | every }}
-      - {{ source.diff.files | matchDiffLines(regex=r/<img src/) | some }}
-      - {{ source.diff.files | matchDiffLines(regex=r/<img src.*alt=/) | nope}}
-
-    run: 
-      - action: add-label@v1
-        args:
-          label: "⚠️ Missing alt label"
-          color: {{ colors.yellow }}
-      - action: request-changes@v1
-        args:
+  review_java_exceptions: 
+    if:  
+      - {{ source.diff.files | matchDiffLines(regex=r/throw new Exception/) | nope }}
+      - {{ files | extensions | match(term='java') | every }}
+    run:
+      - action: add-comment@v1
+        args: 
           comment: | 
-                 Some of the images you added do not have an alt attribute. Please add alt attributes to images to add more context to the image.
-
-colors:
-  yellow: 'fbca04'
+              This PR appears to throw exceptions that aren't specific. Please throw specific exceptions to add more clarity which simplifies the debugging process. 
