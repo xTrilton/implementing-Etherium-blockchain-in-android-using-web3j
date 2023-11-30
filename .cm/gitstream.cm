@@ -21,13 +21,8 @@ automations:
       - action: add-comment@v1
         args:
           comment: |
-            SOC2 requires code review process on every code change. This PR was merged without any review process. 
+            SOC2 requires code review process on every code change. This PR "{{ pr.title }}" #{{ pr.number }} was merged without any review process. 
             _SOC2 ref: CC8.1_
-
-            Here are the details of the PR merged without review:
-              
-              PR Title: {{ pr.title }}
-              PR Number: {{ pr.number }}
 
             @my-org/app-sec
 
