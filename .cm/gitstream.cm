@@ -1,13 +1,38 @@
 # -*- mode: yaml -*-
+
 manifest:
   version: 1.0
+
 automations:
-  review_java_exceptions: 
-    if:  
-      - {{ source.diff.files | matchDiffLines(regex=r/throw new Exception/) | nope }}
-      - {{ files | extensions | match(term='java') | every }}
+  flag_merged_no_review:
+    if:
+      - {{ pr.approvals | length == 0 }}
     run:
+      - action: add-label@v1
+        args:
+          label: "DCF5-merge-without-approve"
+          color: {{ colors.red }}
+
+      - action: send-slack-message@v1
+        args:
+          message: "SOC2 requires code review process on every code change. This PR was merged without any review process. _SOC2 ref: CC8.1_ Here are the details of the PR merged without review:
+              PR Title: {{ pr.number }}
+              PR Number: {{ pr.title }}"
+          webhook_url: "{{ slack_webhook }}"
+
       - action: add-comment@v1
-        args: 
-          comment: | 
-              This PR appears to throw exceptions that aren't specific. Please throw specific exceptions to add more clarity which simplifies the debugging process. 
+        args:
+          comment: |
+            SOC2 requires code review process on every code change. This PR was merged without any review process. 
+            _SOC2 ref: CC8.1_
+
+            Here are the details of the PR merged without review:
+              PR Title: {{ pr.number }}
+              PR Number: {{ pr.title }}
+
+            @my-org/app-sec
+
+slack_webhook: {{ env.SLACK_WEBHOOK }}
+
+colors:
+  red: 'F6443B'
