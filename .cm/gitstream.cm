@@ -5,20 +5,23 @@ manifest:
 automations:
 
   {% for item in feature_flags %}
-  review_deprecated_component_{{ item.old }}:
+  label_ff_flagsmith_{{ item.old }}:
     if:
-      - {{ source.diff.files | matchDiffLines(regex=item.regex) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=item.name) | some }}
     run:
       - action: add-label@v1
         args:
-          label: 'deprecated-component'
-          color: '#FF0000'
+          label: {{ item.name }}
+          color: {{ colors.yellow }}
   {% endfor %}
 
 feature_flags:
-  - name: r/oldAPI/
-    old: oldAPI
-    new: newAPI
-  - regex: r/anotherOldAPI/
-    old: anotherOldAPI
-    new: anotherNewAPI
+  - FeatureCategory: deployment
+    name: rollback_plan_activated
+  - FeatureCategory: security
+    name: admin_panel_feature_access
+  - FeatureCategory: user_interfase
+    name: mobile_push_notifications_enabled
+
+
+
