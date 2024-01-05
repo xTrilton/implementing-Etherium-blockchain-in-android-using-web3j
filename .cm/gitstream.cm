@@ -5,9 +5,10 @@ manifest:
 automations:
 
   {% for item in feature_flags %}
-  label_ff_flagsmith_{{ item.old }}:
+  label_ff_flagsmith_{{ item.name }}:
     if:
-      - {{ source.diff.files | matchDiffLines(regex=item.name) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=r/flagsmith.hasFeature\(/) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=item.regex) | some }}
     run:
       - action: add-label@v1
         args:
@@ -16,12 +17,15 @@ automations:
   {% endfor %}
 
 feature_flags:
-  - FeatureCategory: deployment
-    name: rollback_plan_activated
-  - FeatureCategory: security
-    name: admin_panel_feature_access
-  - FeatureCategory: user_interfase
-    name: mobile_push_notifications_enabled
+   - name: rollback_plan_activated 
+     regex: r/rollback_plan_activated/
+   - name: admin_panel_feature_access 
+     regex: r/mobile_push_notifications_enabled/
+   - name: mobile_push_notifications_enabled
+     regex: r/mobile_push_notifications_enabled/
+
+colors:
+  yellow: 'ffb300'   
 
 
 
