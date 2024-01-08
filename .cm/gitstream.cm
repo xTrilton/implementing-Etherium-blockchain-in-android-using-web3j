@@ -17,10 +17,10 @@ automations:
   {% endfor %}
 
 feature_flags:
-   - name: rollback_plan_activated 
-     regex: r/rollback_plan_activated/
-   - name: premium_plan_features_unlocked 
-     regex: r/premium_plan_features_unlocked/
+   - name: engineering_rollback_plan_activated 
+     regex: r/engineering_rollback_plan_activated/
+   - name: marketing_premium_plan_features_unlocked 
+     regex: r/marketing_premium_plan_features_unlocked/
    - name: mobile_push_notifications_enabled
      regex: r/mobile_push_notifications_enabled/
 
