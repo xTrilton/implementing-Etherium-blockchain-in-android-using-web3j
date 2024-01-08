@@ -19,8 +19,8 @@ automations:
 feature_flags:
    - name: rollback_plan_activated 
      regex: r/rollback_plan_activated/
-   - name: admin_panel_feature_access 
-     regex: r/admin_panel_feature_access/
+   - name: premium_plan_features_unlocked 
+     regex: r/premium_plan_features_unlocked/
    - name: mobile_push_notifications_enabled
      regex: r/mobile_push_notifications_enabled/
 
