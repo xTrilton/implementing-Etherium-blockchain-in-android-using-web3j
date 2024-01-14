@@ -4,15 +4,15 @@ manifest:
   version: 1.0
 
 automations:
-  approve_snyk:
+  approve_renovate:
     if:
-      - {{ branch.name | includes(term="snyk") }}
-      - {{ branch.author | includes(term="o") }}
+      - {{ branch.name | includes(term="renovate") }}
+      - {{ branch.author | includes(term="boe") }}
     run:
       - action: approve@v1
       - action: add-label@v1
         args:
-          label: "approved-snyk"
+          label: "approved-renovate"
       - action: merge@v1
         args:
           wait_for_all_checks: true
