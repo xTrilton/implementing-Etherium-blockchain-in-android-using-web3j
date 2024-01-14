@@ -1,31 +1,19 @@
 # -*- mode: yaml -*-
+
 manifest:
   version: 1.0
 
 automations:
-
-  {% for item in feature_flags %}
-  label_ff_flagsmith_{{ item.name }}:
+  approve_snyk:
     if:
-      - {{ source.diff.files | matchDiffLines(regex=r/flagsmith.hasFeature\(/) | some }}
-      - {{ source.diff.files | matchDiffLines(regex=item.regex) | some }}
+      - {{ branch.name | includes(term="snyk") }}
+      - {{ branch.author | includes(term="snyk") }}
     run:
+      - action: approve@v1
       - action: add-label@v1
         args:
-          label: {{ item.name }}
-          color: {{ colors.yellow }}
-  {% endfor %}
-
-feature_flags:
-   - name: engineering_rollback_plan_activated 
-     regex: r/engineering_rollback_plan_activated/
-   - name: marketing_premium_plan_features_unlocked 
-     regex: r/marketing_premium_plan_features_unlocked/
-   - name: mobile_push_notifications_enabled
-     regex: r/mobile_push_notifications_enabled/
-
-colors:
-  yellow: 'ffb300'   
-
-
-
+          label: "approved-snyk"
+      - action: merge@v1
+        args:
+          wait_for_all_checks: true
+          squash_on_merge: true
