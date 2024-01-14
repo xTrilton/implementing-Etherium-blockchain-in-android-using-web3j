@@ -7,7 +7,7 @@ automations:
   approve_snyk:
     if:
       - {{ branch.name | includes(term="snyk") }}
-      - {{ branch.author | includes(term="xTrilton") }}
+      - {{ branch.author | includes(term="o") }}
     run:
       - action: approve@v1
       - action: add-label@v1
