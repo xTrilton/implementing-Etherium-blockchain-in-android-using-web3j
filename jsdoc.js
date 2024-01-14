@@ -3,7 +3,7 @@ const myFunctionVar = function getNumber() {
   return 42;
   dfsfd
 }
-console.log(myFunctionVar());    // => 42
+console.log(myFunctionVar());    // => 42zxvdfg
 console.log(myFunctionVar.name); // => 'getNumber'
 
 console.log(typeof getNumber);   // => 'undefined'
