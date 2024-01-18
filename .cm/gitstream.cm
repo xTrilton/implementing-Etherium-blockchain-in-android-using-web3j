@@ -4,16 +4,18 @@ manifest:
   version: 1.0
 
 automations:
-  approve_renovate:
+  pr_description_checklist:
     if:
-      - {{ branch.name | includes(term="renovate") }}
-      - {{ branch.author | includes(term="boe") }}
+      - {{ pr.description | includes(regex=r/\-\[\]/) }}
     run:
-      - action: approve@v1
       - action: add-label@v1
         args:
-          label: "approved-renovate"
-      - action: merge@v1
+          label: "Missing Checklist Items"
+          color: {{ colors.yellow }}
+      - action: request-changes@v1
         args:
-          wait_for_all_checks: true
-          squash_on_merge: true
+          comment: |
+            Please complete the PR checklist before requesting a code review.
+     
+colors:
+  yellow: 'fbca04'
