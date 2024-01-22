@@ -1,12 +1,10 @@
-# -*- mode: yaml -*-
-
 manifest:
   version: 1.0
 
 automations:
   enforce_pr_description_requirements:
     if:
-      - {{ pr.description | match(regex=r/\s|\S/) }}
+       - {{ pr.description | match(regex=r/\s|\S/) }}
     run:
       - action: request-changes@v1
         args:
