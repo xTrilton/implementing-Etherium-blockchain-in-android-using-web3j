@@ -9,4 +9,4 @@ automations:
       - action: request-changes@v1
         args:
           comment: |
-            Our goal is to keep PRs under 50 lines of code changed, and this PR modifies 50 of lines. Please consider breaking this PR up into smaller components to make code reviews easier.
+            Our goal is to keep PRs under 250 lines of code changed, and this PR modifies 250 of lines. Please consider breaking this PR up into smaller components to make code reviews easier.
