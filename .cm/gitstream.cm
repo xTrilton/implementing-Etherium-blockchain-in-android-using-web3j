@@ -6,7 +6,7 @@ manifest:
 automations:
   enforce_pr_description_requirements:
     if:
-      - {{ pr.description | includes(regex=r/\s|\S/) }}
+      - {{ pr.description | includes(regex=r/\s|\S/) | nope }}
     run:
       - action: request-changes@v1
         args:
