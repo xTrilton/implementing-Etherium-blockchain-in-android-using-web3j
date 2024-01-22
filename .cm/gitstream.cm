@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_pr_description_requirements:
     if:
-       - {{ pr.title | match(regex=r/\s|\S/) }}
+       - {{ pr.description | match(regex=r/\s|\S/) }}
     run:
       - action: request-changes@v1
         args:
