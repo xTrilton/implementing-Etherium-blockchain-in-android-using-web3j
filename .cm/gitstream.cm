@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_changed_lines_limit:
     if:
-       - {{ branch.diff.size < 250 }}
+       - {{ branch.diff.size > 250 }}
     run:
       - action: request-changes@v1
         args:
