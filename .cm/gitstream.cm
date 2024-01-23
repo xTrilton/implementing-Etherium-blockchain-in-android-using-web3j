@@ -1,14 +1,21 @@
+# -*- mode: yaml -*-
+
 manifest:
   version: 1.0
 
 automations:
-  enforce_pr_description_requirements:
+  pr_description_checklist:
     if:
-       - {{ not has.description }} 
+      - {{ pr.description | includes(regex=r/\-\[\]/) }}
     run:
+      - action: add-label@v1
+        args:
+          label: "Missing Checklist Items"
+          color: {{ colors.yellow }}
       - action: request-changes@v1
         args:
           comment: |
-            Descriptions are required for all PRs. Please update your description to describe what changes this PR introduces and anything else reviewers should be aware of. Please also provide a reference to any relevant project management tracking resources.
-has:
-  description: {{ pr.description | includes(regex=r/[a-zA-Z]/) }}
+            Please complete the PR checklist before requesting a code review.
+     
+colors:
+  yellow: 'fbca04'
