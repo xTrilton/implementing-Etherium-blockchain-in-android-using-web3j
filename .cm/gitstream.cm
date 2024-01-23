@@ -1,19 +1,12 @@
 manifest:
   version: 1.0
 
-on:
-  - comment_added
-  - label_added
-
 automations:
-  skip_github_action_checks_for_urgent_prs:
+  enforce_changed_file_limit:
     if:
-       - {{ is.requested or is.label }}
+       - {{ file | length > 0 }}
     run:
-      - action: add-github-check@v1
+      - action: request-changes@v1
         args:
-          check_name: deployment-ci
-          conclusion: skipped
-is:
-  requested: {{ pr.comments | match(attr='content', term='/gitstream urgent') | some }}
-  label: {{ pr.labels | match(term='urgent') }}
+          comment: |
+           Our goal is to keep PRs under 10 changed files, and this PR modifies more than 10 files. Please consider breaking this PR up into smaller components to make code reviews easier.
