@@ -1,21 +1,19 @@
-# -*- mode: yaml -*-
-
 manifest:
   version: 1.0
 
+on:
+  - comment_added
+  - pr_created
+
 automations:
-  pr_description_checklist:
+  skip_github_action_checks_for_urgent_prs:
     if:
-      - {{ pr.description | includes(regex=r/\-\[\]/) }}
+       - {{ is.requested or is.label }}
     run:
-      - action: add-label@v1
+      - action: add-github-check@v1
         args:
-          label: "Missing Checklist Items"
-          color: {{ colors.yellow }}
-      - action: request-changes@v1
-        args:
-          comment: |
-            Please complete the PR checklist before requesting a code review.
-     
-colors:
-  yellow: 'fbca04'
+          check_name: staging-ci
+          conclusion: skipped
+is:
+  requested: {{ pr.comments | match(attr='content', term='/gitstream urgent') | some }}
+  label: {{ pr.labels | match(term='urgent') | nope }}
