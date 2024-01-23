@@ -12,7 +12,7 @@ automations:
     run:
       - action: add-github-check@v1
         args:
-          check_name: staging-ci
+          check_name: deployment-ci
           conclusion: skipped
 is:
   requested: {{ pr.comments | match(attr='content', term='/gitstream urgent') | some }}
