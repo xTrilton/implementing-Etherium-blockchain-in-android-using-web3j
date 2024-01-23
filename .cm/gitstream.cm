@@ -4,7 +4,7 @@ manifest:
 automations:
   enforce_changed_file_limit:
     if:
-       - {{ file | length > 0 }}
+       - {{ files | length > 0 }}
     run:
       - action: request-changes@v1
         args:
