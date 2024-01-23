@@ -3,7 +3,7 @@ manifest:
 
 on:
   - comment_added
-  - pr_created
+  - label_added
 
 automations:
   skip_github_action_checks_for_urgent_prs:
