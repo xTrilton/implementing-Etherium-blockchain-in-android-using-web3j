@@ -16,4 +16,4 @@ automations:
           conclusion: skipped
 is:
   requested: {{ pr.comments | match(attr='content', term='/gitstream urgent') | some }}
-  label: {{ pr.labels | match(term='urgent') | nope }}
+  label: {{ pr.labels | match(term='urgent') }}
